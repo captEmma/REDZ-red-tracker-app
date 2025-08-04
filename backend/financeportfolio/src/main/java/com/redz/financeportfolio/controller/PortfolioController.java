@@ -16,11 +16,11 @@ public class PortfolioController {
         this.yahooFinanceService = yahooFinanceService;
     }
 
-    @GetMapping("/{period}/{interval}/{stock}")
+    @GetMapping("/{stock}")
     public Map<String, Object> getStockData(
             @PathVariable String stock,
-            @PathVariable String period,
-            @PathVariable String interval){
+            @RequestParam(defaultValue = "1d") String period,
+            @RequestParam(defaultValue = "1d") String interval){
         return yahooFinanceService.getStockData(stock, period, interval);
     }
 }
