@@ -1,15 +1,18 @@
-import './App.css'
-import Performance from './components/Performance'
+import "./App.css";
+import Investment from "./components/Investment";
+import Performance from "./components/Performance";
+import Doughnut from "./components/Doughnut";
+import ManageStocks from "./components/ManageStocks";
 
 function App() {
-  let list = ["stock1", "stock2"];
-
-  return (
-    <>
-      {/* TODO: create homepage */}
-      <Performance title="example1" list={list}></Performance>
-    </>
-  )
+    return (
+        <>
+            {/* TODO: create homepage */}
+            <Investment></Investment>
+            <Doughnut />
+            <ManageStocks />
+        </>
+    );
 }
 
-export default App
+export default App;

@@ -1,1 +1,52 @@
-/* TODO: add css */
+/* TODO: add css */* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stock-button {
+    font-weight: bold;
+    font-size: 25px;
+    background-color: #a13030;
+    border: 0px transparent;
+    border-radius: 10px;
+    margin: 10px 0px 20px 0px;
+    padding: 10px 20px 10px 10px;
+    color: #ffffff;
+    transition-duration: 0.2s;
+
+    &:hover {
+        background-color: #622323;
+        scale: 0.95;
+    }
+}
+
+.investment {
+    width: 400px;
+    border: 1px #a13030 solid;
+}
+
+.investment-title {
+    background-color: #883030;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.investment-item {
+    padding: 5px 0px;
+    border: 1px #a13030 solid;
+}
+
+.investment-item-amount,
+.investment-amount {
+    text-align: right;
+}
+
+.investment-item:nth-child(even) {
+    background-color: #f7373716;
+}
