@@ -1,1 +1,29 @@
-/* TODO: add css */
+/* TODO: add css */* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.investment {
+    width: 400px;
+    border: 1px #a04764 solid;
+}
+
+.investment-title {
+    background-color: #88304e;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.investment-item {
+    padding: 5px 0px;
+    border: 1px #a04764 solid;
+}
+
+.investment-item-amount,
+.investment-amount {
+    text-align: right;
+}
+
+.investment-item:nth-child(even) {
+    background-color: #f7374e16;
+}
