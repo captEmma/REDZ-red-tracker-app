@@ -1,11 +1,13 @@
 package com.redz.financeportfolio.service;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class YahooFinanceService {
     private final RestTemplate restTemplate = new RestTemplate();
     public Map<String, Object> getStockData(String stock, String period, String interval){
