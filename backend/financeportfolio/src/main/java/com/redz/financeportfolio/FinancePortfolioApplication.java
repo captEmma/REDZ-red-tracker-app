@@ -2,23 +2,22 @@ package com.redz.financeportfolio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import yahoofinance.Stock;
-import yahoofinance.YahooFinance;
-
-import java.io.IOException;
-import java.math.BigDecimal;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class FinancePortfolioApplication {
-	public static void main(String[] args) throws IOException {
+
+	public static void main(String[] args) {
+
 		SpringApplication.run(FinancePortfolioApplication.class, args);
-		Stock stock = YahooFinance.get("INTC");
+		RestTemplate restTemplate = new RestTemplate();
 
-		BigDecimal price = stock.getQuote().getPrice();
-		BigDecimal change = stock.getQuote().getChangeInPercent();
-		BigDecimal peg = stock.getStats().getPeg();
-		BigDecimal dividend = stock.getDividend().getAnnualYieldPercent();
+		String url = "http://localhost:5000/stocks/TSLA";
 
-		stock.print();
+		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+
+		System.out.println("Received JSON: " + response.getBody());
+
 	}
 }
