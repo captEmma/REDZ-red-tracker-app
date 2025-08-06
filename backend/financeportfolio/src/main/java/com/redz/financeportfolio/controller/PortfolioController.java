@@ -22,7 +22,6 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    //TODO change route to attributes
     @PutMapping("/buy/{symbol}/{cost}")
     public PortfolioItem buyShares(@PathVariable String symbol, @PathVariable double cost){
         return portfolioService.buyShares(symbol, cost);
