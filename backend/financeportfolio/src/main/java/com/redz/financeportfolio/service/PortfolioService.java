@@ -40,6 +40,7 @@ public class PortfolioService {
 
     public PortfolioItem buyShares(String symbol, double cost){
         if(cost>currentUser.getCash()) {
+            //TODO figure out what to do with exceptions
             throw new RuntimeException("Not enough cash!");
         }
         currentUser.buyStock(cost);
@@ -66,24 +67,24 @@ public class PortfolioService {
         StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
         double sellPrice = stockData.getCurrentPrice();
 
-        PortfolioItem updatedItem;
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
-
             double oldShares = existingStock.getShares();
-            double oldPrice = existingStock.getPurchasePrice();
 
-            double newShares = oldShares - shares;
-            double newPrice = oldPrice - (shares * sellPrice);
+            if(oldShares >= shares) {
+                double sellFor = shares * sellPrice;
 
-            updatedItem = new PortfolioItem(symbol, newShares, newPrice);
-            return repository.save(updatedItem);
-        } else {
-            //TODO HANDLE not enough shares
-            return null;
+                currentUser.sellStock(sellFor);
+                userRepository.save(currentUser);
+
+                existingStock.sellStock(shares, sellFor);
+                return repository.save(existingStock);
+            }
         }
+        //TODO figure out what to do with exceptions
+        throw new RuntimeException("Couldn't sell stocks");
     }
 
     public List<PortfolioItem> getAllItems(){
