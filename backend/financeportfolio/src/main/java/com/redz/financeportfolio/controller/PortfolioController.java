@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PortfolioController {
@@ -24,15 +23,15 @@ public class PortfolioController {
     }
 
     //TODO change route to attributes
-    @PutMapping("/add/{symbol}/{cost}")
-    public PortfolioItem addItem(@PathVariable String symbol, @PathVariable double cost){
-        return portfolioService.addItem(symbol, cost);
+    @PutMapping("/buy/{symbol}/{cost}")
+    public PortfolioItem buyShares(@PathVariable String symbol, @PathVariable double cost){
+        return portfolioService.buyShares(symbol, cost);
     }
 
-//    @DeleteMapping("/remove/{id}")
-//    public void removeItem(@PathVariable Integer id){
-//        portfolioService.removeItem(id);
-//    }
+    @PutMapping("/sell/{symbol}/{numberOfShares}")
+    public PortfolioItem sellShares(@PathVariable String symbol, @PathVariable double numberOfShares){
+        return portfolioService.sellShares(symbol, numberOfShares);
+    }
 
     @GetMapping("/all")
     public List<PortfolioItem> getAllItems(){

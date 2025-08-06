@@ -33,7 +33,7 @@ public class PortfolioService {
         return netWorth;
     }
 
-    public PortfolioItem addItem(String symbol, double cost){
+    public PortfolioItem buyShares(String symbol, double cost){
         if(cost>cash) {
             //TODO HANDLE not enough money
         }
@@ -64,9 +64,28 @@ public class PortfolioService {
         return repository.save(updatedItem);
     }
 
-    public void removeItem(String symbol, double shares){
-        //TODO make this a PUT request as well
-        //repository.deleteById(id);
+    public PortfolioItem sellShares(String symbol, double shares){
+        StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+        double sellPrice = stockData.getCurrentPrice();
+
+        PortfolioItem updatedItem;
+        Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+
+        if (existingStockOptional.isPresent()) {
+            PortfolioItem existingStock = existingStockOptional.get();
+
+            double oldShares = existingStock.getShares();
+            double oldPrice = existingStock.getPurchasePrice();
+
+            double newShares = oldShares - shares;
+            double newPrice = oldPrice - (shares * sellPrice);
+
+            updatedItem = new PortfolioItem(symbol, newShares, newPrice);
+            return repository.save(updatedItem);
+        } else {
+            //TODO HANDLE not enough shares
+            return null;
+        }
     }
 
     public List<PortfolioItem> getAllItems(){
