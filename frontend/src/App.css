@@ -10,7 +10,7 @@
 
 .stock-button {
     font-weight: bold;
-    font-size: 25px;
+    font-size: 20px;
     background-color: #a13030;
     border: 0px transparent;
     border-radius: 10px;
@@ -18,11 +18,26 @@
     padding: 10px 20px 10px 10px;
     color: #ffffff;
     transition-duration: 0.2s;
+    text-transform: uppercase;
 
     &:hover {
         background-color: #622323;
         scale: 0.95;
     }
+}
+
+.manage-stocks-bg {
+    background-color: #181010;
+    border-radius: 10px;
+    width: max-content;
+    padding: 15px 40px;
+}
+
+.or {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .investment {
@@ -66,33 +81,4 @@
     font-size: 25px;
     text-transform: uppercase;
     font-weight: bold;
-}
-* {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-
-.investment {
-    width: 400px;
-    border: 1px #a04764 solid;
-}
-/**/
-.investment-title {
-    background-color: #88304e;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #ffffff;
-}
-
-.investment-item {
-    padding: 5px 0px;
-    border: 1px #a04764 solid;
-}
-
-.investment-item-amount,
-.investment-amount {
-    text-align: right;
-}
-
-.investment-item:nth-child(even) {
-    background-color: #f7374e16;
 }
