@@ -1,42 +1,98 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.stock-button {
+    font-weight: bold;
+    font-size: 25px;
+    background-color: #a13030;
+    border: 0px transparent;
+    border-radius: 10px;
+    margin: 10px 0px 20px 0px;
+    padding: 10px 20px 10px 10px;
+    color: #ffffff;
+    transition-duration: 0.2s;
+
+    &:hover {
+        background-color: #622323;
+        scale: 0.95;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.investment {
+    width: 400px;
+    border: 1px #a13030 solid;
 }
 
-.card {
-  padding: 2em;
+.investment-title {
+    background-color: #883030;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
-.read-the-docs {
-  color: #888;
+.investment-item {
+    padding: 5px 0px;
+    border: 1px #a13030 solid;
+}
+
+.investment-item-amount,
+.investment-amount {
+    text-align: right;
+}
+
+.investment-item:nth-child(even) {
+    background-color: #f7373716;
+}
+
+.doughnut {
+    position: relative;
+    width: 400px;
+    padding: 30px;
+}
+
+.doughnut-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+* {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.investment {
+    width: 400px;
+    border: 1px #a04764 solid;
+}
+/**/
+.investment-title {
+    background-color: #88304e;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ffffff;
+}
+
+.investment-item {
+    padding: 5px 0px;
+    border: 1px #a04764 solid;
+}
+
+.investment-item-amount,
+.investment-amount {
+    text-align: right;
+}
+
+.investment-item:nth-child(even) {
+    background-color: #f7374e16;
 }
