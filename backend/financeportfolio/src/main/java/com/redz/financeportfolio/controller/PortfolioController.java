@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/stocks")
-public class StocksController {
+public class PortfolioController {
     @Autowired
     private YahooFinanceService yahooFinanceService;
 
-    public StocksController(YahooFinanceService yahooFinanceService){
+    public PortfolioController(YahooFinanceService yahooFinanceService){
         this.yahooFinanceService = yahooFinanceService;
     }
 
