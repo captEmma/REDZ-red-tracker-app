@@ -23,7 +23,6 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    //TODO change route to attributes
     @PutMapping("/add/{symbol}/{cost}")
     public PortfolioItem addItem(@PathVariable String symbol, @PathVariable double cost){
         return portfolioService.addItem(symbol, cost);

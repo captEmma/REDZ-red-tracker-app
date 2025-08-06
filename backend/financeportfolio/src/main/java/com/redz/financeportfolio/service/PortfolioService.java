@@ -3,6 +3,7 @@ package com.redz.financeportfolio.service;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.repository.PortfolioRepository;
+import com.redz.financeportfolio.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,13 +12,15 @@ import java.util.Optional;
 @Service
 public class PortfolioService {
     private final PortfolioRepository repository;
+    private final UserRepository userRepository;
 
     private double cash = 500000;
     private int netWorth;
     //TODO: add fields to represent performance
 
-    public PortfolioService(PortfolioRepository repository){
+    public PortfolioService(PortfolioRepository repository, UserRepository userRepository){
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     public int calculateNetWorth(){
@@ -40,15 +43,11 @@ public class PortfolioService {
         StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
         double purchasePrice = stockData.getCurrentPrice();
         double shares =  cost/purchasePrice;
-        //PortfolioItem item = new PortfolioItem(symbol, shares, purchasePrice);
         PortfolioItem updatedItem;
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
-//            existingStock.setShares(shares);
-//            existingStock.setSymbol(symbol);
-//            existingStock.setPurchasePrice(purchasePrice);
 
             double oldShares = existingStock.getShares();
             double oldPrice = existingStock.getPurchasePrice();
