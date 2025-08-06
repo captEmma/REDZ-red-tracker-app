@@ -1,39 +1,39 @@
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import InvestmentItem from "./InvestmentItem";
+import ShowButton from "./ShowButton";
 
 const Investment = () => {
-    const mockData = [
-        {
-            name: "company1",
-            amount: 15009,
-        },
-        {
-            name: "company2",
-            amount: 8021,
-        },
-        {
-            name: "company3",
-            amount: 19215,
-        },
-    ];
+  const mockData = [
+    {
+      name: "company1",
+      sharesCount: -10,
+    },
+    {
+      name: "company2",
+      sharesCount: 23,
+    },
+    {
+      name: "company3",
+      sharesCount: 2,
+    },
+  ];
 
-    return (
-        <div className="investment">
-            <Container>
-                <Row className="investment-title">
-                    <Col>Investment</Col>
-                    <Col className="investment-amount">[INSERT SUM]</Col>
-                </Row>
-                <Row>
-                    {mockData.map((data) => (
-                        <InvestmentItem key={data.name} name={data.name} amount={data.amount} />
-                    ))}
-                </Row>
-            </Container>
-        </div>
-    );
+  return (
+    <div className="component-bg investment">
+      <Container>
+        <div className="investment-title">Recent Investments</div>
+        <Row>
+          {mockData.map((data) => (
+            <InvestmentItem key={data.name} name={data.name} sharesCount={data.sharesCount} />
+          ))}
+        </Row>
+        <Row>
+          <ShowButton />
+        </Row>
+      </Container>
+    </div>
+  );
 };
 
 export default Investment;
