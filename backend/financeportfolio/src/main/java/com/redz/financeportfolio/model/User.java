@@ -1,20 +1,29 @@
 package com.redz.financeportfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String username;
     private double cash;
 
     public User(){}
 
-    public User(String username, double cash){
+    public User(Integer id, String username, double cash){
         this.username = username;
         this.cash = cash;
+    }
+
+    public void buyStock(double cost){
+        cash -= cost;
+    }
+
+    public void sellStock(double sellPrice){
+        cash += sellPrice;
     }
 
     public Integer getId() {
@@ -35,9 +44,5 @@ public class User {
 
     public double getCash() {
         return cash;
-    }
-
-    public void setCash(double cash) {
-        this.cash = cash;
     }
 }

@@ -1,11 +1,9 @@
 package com.redz.financeportfolio.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "portfolio_item")
 public class PortfolioItem {
     @Id
     private String symbol;
@@ -20,20 +18,22 @@ public class PortfolioItem {
         this.purchasePrice = purchasePrice;
     }
 
+    public void buyStock(double sharesToBuy, double cost){
+        shares += sharesToBuy;
+        purchasePrice += cost;
+    }
+
+    public void sellStock(double shares, double sellPrice){
+        this.shares -= shares;
+        purchasePrice -= sellPrice;
+    }
+
     public double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(double purchasePrice) {
-        this.purchasePrice = purchasePrice;
-    }
-
     public double getShares() {
         return shares;
-    }
-
-    public void setShares(double shares) {
-        this.shares = shares;
     }
 
     public void setSymbol(String symbol) {
