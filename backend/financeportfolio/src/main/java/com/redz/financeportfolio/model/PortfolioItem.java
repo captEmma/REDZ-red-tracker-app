@@ -8,12 +8,11 @@ import jakarta.persistence.Id;
 @Entity
 public class PortfolioItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     private String symbol;
     private double shares;
     private double purchasePrice;
+
+    public PortfolioItem() {}
 
     public PortfolioItem(String symbol, double shares, double purchasePrice) {
         this.symbol = symbol;

@@ -6,6 +6,7 @@ import com.redz.financeportfolio.repository.PortfolioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PortfolioService {
@@ -32,20 +33,40 @@ public class PortfolioService {
         return netWorth;
     }
 
-    //TODO change signature to add item dynamically
     public PortfolioItem addItem(String symbol, double cost){
         if(cost>cash) {
-            //TODO HANDLE ERROR
+            //TODO HANDLE not enough money
         }
         StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
         double purchasePrice = stockData.getCurrentPrice();
         double shares =  cost/purchasePrice;
-        PortfolioItem item = new PortfolioItem(symbol, shares, purchasePrice);
-        return repository.save(item);
+        //PortfolioItem item = new PortfolioItem(symbol, shares, purchasePrice);
+        PortfolioItem updatedItem;
+        Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+
+        if (existingStockOptional.isPresent()) {
+            PortfolioItem existingStock = existingStockOptional.get();
+//            existingStock.setShares(shares);
+//            existingStock.setSymbol(symbol);
+//            existingStock.setPurchasePrice(purchasePrice);
+
+            double oldShares = existingStock.getShares();
+            double oldPrice = existingStock.getPurchasePrice();
+
+            double newShares = oldShares + shares;
+            double newPrice = oldPrice + cost;
+
+            updatedItem = new PortfolioItem(symbol, newShares, newPrice);
+        } else {
+            updatedItem = new PortfolioItem(symbol, shares, cost);
+        }
+
+        return repository.save(updatedItem);
     }
 
-    public void removeItem(Integer id){
-        repository.deleteById(id);
+    public void removeItem(String symbol, double shares){
+        //TODO make this a PUT request as well
+        //repository.deleteById(id);
     }
 
     public List<PortfolioItem> getAllItems(){

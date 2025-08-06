@@ -29,10 +29,10 @@ public class PortfolioController {
         return portfolioService.addItem(symbol, cost);
     }
 
-    @DeleteMapping("/remove/{id}")
-    public void removeItem(@PathVariable Integer id){
-        portfolioService.removeItem(id);
-    }
+//    @DeleteMapping("/remove/{id}")
+//    public void removeItem(@PathVariable Integer id){
+//        portfolioService.removeItem(id);
+//    }
 
     @GetMapping("/all")
     public List<PortfolioItem> getAllItems(){
