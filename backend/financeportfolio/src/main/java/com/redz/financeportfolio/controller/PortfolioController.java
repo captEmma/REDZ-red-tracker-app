@@ -35,6 +35,7 @@ public class PortfolioController {
 
     @GetMapping("/all")
     public List<PortfolioItem> getAllItems(){
+        portfolioService.calculateNetWorth();
         return portfolioService.getAllItems();
     }
 

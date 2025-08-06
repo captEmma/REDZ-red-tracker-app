@@ -10,8 +10,23 @@ import java.util.List;
 public class PortfolioService {
     private final PortfolioRepository repository;
 
+    private int netWorth;
+
     public PortfolioService(PortfolioRepository repository){
         this.repository = repository;
+    }
+
+    public int calculateNetWorth(){
+        List<PortfolioItem> items = getAllItems();
+        for(PortfolioItem item : items){
+            String symbol = item.getSymbol();
+            double shares = item.getShares();
+            double currentPrice = new YahooFinanceService().getCurrentPrice(symbol);
+
+            netWorth+=shares*currentPrice;
+        }
+        System.out.println(netWorth);
+        return netWorth;
     }
 
     public PortfolioItem addItem(PortfolioItem item){

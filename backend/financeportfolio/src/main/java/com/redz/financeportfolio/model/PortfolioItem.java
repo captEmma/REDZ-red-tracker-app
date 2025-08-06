@@ -14,14 +14,11 @@ public class PortfolioItem {
     private String symbol;
     private double shares;
     private double purchasePrice;
-    private String purchaseDate;
 
-    public String getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public void setPurchaseDate(String purchaseDate) {
-        this.purchaseDate = purchaseDate;
+    public PortfolioItem(String symbol, double shares, double purchasePrice) {
+        this.symbol = symbol;
+        this.shares = shares;
+        this.purchasePrice = purchasePrice;
     }
 
     public double getPurchasePrice() {
