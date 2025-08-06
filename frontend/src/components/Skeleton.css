@@ -3,35 +3,32 @@ body {
   background-color: #351c20 !important;
   text-align: center;
   color: #ffffff;
+  margin: 0px;
+  padding: 0px;
 }
 
 #top {
   background-color: #b33a3a;
   color: #ffffff;
   width: 100%;
-  /* text-align: center; */
-  border-radius: 4px;
   height: 20%;
   padding: 10px;
-  margin: 10px;
   line-height: 5%;
+  margin-bottom: 30px;
   display: flex;
   align-items: center;
   font-size: 20px;
 }
-/* #mainContainer {
+
+.center-content {
   display: flex;
-  width: 100%;
-  background-color: #1d2d44;
-  border-radius: 8px;
-  height: 100%;
-  margin-top: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-} */
+  justify-content: center;
+  align-items: center;
+}
+
 #main-container {
   display: flex;
-  width: 100%;
-  margin: 10px;
+  width: 95%;
   background-color: #ffffff;
   padding: 1px;
   border-radius: 8px;
