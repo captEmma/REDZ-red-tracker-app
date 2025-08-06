@@ -1,0 +1,103 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #351c20 !important;
+  text-align: center;
+  color: #ffffff;
+}
+
+#top {
+  background-color: #b33a3a;
+  color: #ffffff;
+  width: 100%;
+  /* text-align: center; */
+  border-radius: 4px;
+  height: 20%;
+  padding: 10px;
+  margin: 10px;
+  line-height: 5%;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+/* #mainContainer {
+  display: flex;
+  width: 100%;
+  background-color: #1d2d44;
+  border-radius: 8px;
+  height: 100%;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+} */
+#main-container {
+  display: flex;
+  width: 100%;
+  margin: 10px;
+  background-color: #ffffff;
+  padding: 1px;
+  border-radius: 8px;
+  height: 100%;
+
+  /* display: block; */
+}
+
+#left-container {
+  height: 100%;
+  width: 30%;
+  border-radius: 8px;
+  background-color: #ad2831;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  display: inline;
+  float: left;
+}
+#right-container {
+  height: 300px; /*can be made dynamic later please*/
+  width: 30%;
+  border-radius: 8px;
+  background-color: #800e13;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  float: right;
+}
+#b-s-container {
+  /*buy sell*/
+  height: 200px; /*can be made dynamic later please*/
+  width: 30%;
+  border-radius: 8px;
+  background-color: #800e13;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  float: right;
+}
+
+h2 {
+  color: #ffffff;
+  font-size: 18px;
+}
+
+h1 {
+  color: #36463b;
+  font-size: 28px;
+  text-align: center;
+}
+p {
+  color: #ffffff;
+  padding: 10px;
+}
+.button {
+  background-color: #1d2d44;
+  color: #fff;
+  cursor: pointer;
+  border: 0px solid #fff;
+  margin: 10px 0;
+  border-radius: 10px;
+  font-weight: bold;
+  height: 60px;
+  width: 200px;
+}
+.button:hover {
+  border: 5px solid #969393;
+}

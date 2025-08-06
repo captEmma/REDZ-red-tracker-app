@@ -1,65 +1,9 @@
-
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #FAF1F1;
+/* body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #faf1f1;
   text-align: center;
-  padding: 50px;
   color: #ffffff;
 }
-
-#top {
-  background-color: #0D1321;
-  color: #ffffff;
-  width: 100%;
-  text-align: center;
-  border-radius: 8px;
-  height: 20%;
-  padding: 10px;
-  line-height: 5%;
-}
-
-#mainContainer {
-  display: flex;
-  width: 100%;
-  background-color: #1D2D44;
-  border-radius: 8px;
-  height: 100%;
-  margin-top: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-}
-
-#container {
-  width: 100%;
-  margin: 10px auto;
-  background-color: #F0F0F0;
-  padding: 1px;
-  border-radius: 8px;
-  height: 100%;
-  margin-left: 20px;
-  margin-right: 20px;
-
-}
-
-#left-container{
-  height: 100%;
-  width: 30%;
-  border-radius: 8px;
-  background-color: #748CAB;
-  margin: 10px;
-  padding: 10px;
-}
-#right-container{
-
-}
-#b-s-container{
-
-}
-
-
-
-
-
 
 h2 {
   color: #ffffff;
@@ -67,16 +11,16 @@ h2 {
 }
 
 h1 {
-  color: #36463B;
+  color: #36463b;
   font-size: 28px;
   text-align: center;
 }
 p {
   color: #ffffff;
-  padding: 10px
+  padding: 10px;
 }
 .button {
-  background-color: #1D2D44;
+  background-color: #1d2d44;
   color: #fff;
   cursor: pointer;
   border: 0px solid #fff;
@@ -85,58 +29,33 @@ p {
   font-weight: bold;
   height: 60px;
   width: 200px;
-
 }
 .button:hover {
   border: 5px solid #969393;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .investment {
-    width: 400px;
-    border: 1px #a04764 solid;
+  width: 400px;
+  border: 1px #a04764 solid;
 }
 
 .investment-title {
-    background-color: #88304e;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #ffffff;
+  background-color: #88304e;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
 }
 
 .investment-item {
-    padding: 5px 0px;
-    border: 1px #a04764 solid;
+  padding: 5px 0px;
+  border: 1px #a04764 solid;
 }
 
 .investment-item-amount,
 .investment-amount {
-    text-align: right;
+  text-align: right;
 }
 
 .investment-item:nth-child(even) {
-    background-color: #f7374e16;
-}
+  background-color: #f7374e16;
+} */
