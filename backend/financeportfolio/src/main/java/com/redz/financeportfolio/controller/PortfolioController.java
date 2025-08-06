@@ -23,18 +23,20 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    @PostMapping("/add")
-    public PortfolioItem addItem(@RequestBody PortfolioItem item){
-        return portfolioService.addItem(item);
+    //TODO change route to attributes
+    @PutMapping("/add/{symbol}/{cost}")
+    public PortfolioItem addItem(@PathVariable String symbol, @PathVariable double cost){
+        return portfolioService.addItem(symbol, cost);
     }
 
-    @DeleteMapping("/remove/{id}")
-    public void removeItem(@PathVariable Integer id){
-        portfolioService.removeItem(id);
-    }
+//    @DeleteMapping("/remove/{id}")
+//    public void removeItem(@PathVariable Integer id){
+//        portfolioService.removeItem(id);
+//    }
 
     @GetMapping("/all")
     public List<PortfolioItem> getAllItems(){
+        portfolioService.calculateNetWorth();
         return portfolioService.getAllItems();
     }
 

@@ -62,6 +62,11 @@ public class StockData {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    public double getCurrentPrice(){
+        for (Double price : close.values())
+            return price;
+        return 0;
+    }
 
     public Map<Long, Double> getStockSplits() {
         return stockSplits;

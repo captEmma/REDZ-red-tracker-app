@@ -4,7 +4,13 @@ USE financeportfolio;
 
 CREATE TABLE IF NOT EXISTS portfolio_item(
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    symbol VARCHAR(10) NOT NULL,
-    purchase_price DOUBLE NOT NULL,
-    purchase_date DATETIME NOT NULL
+    symbol VARCHAR(10) NOT NULL UNIQUE,
+    shares DOUBLE NOT NULL,
+    purchase_price DOUBLE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(20) NOT NULL,
+    cash INTEGER NOT NULL
 );
