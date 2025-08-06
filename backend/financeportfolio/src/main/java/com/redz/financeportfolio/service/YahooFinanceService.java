@@ -51,4 +51,10 @@ public class YahooFinanceService {
             throw new RuntimeException("Failed to connect to flask server");
         }
     }
+
+    public double getCurrentPrice(String symbol) {
+        for(Double value : getStockData(symbol, "1d", "1d").getClose().values())
+            return value;
+        return 0;
+    }
 }
