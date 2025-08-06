@@ -9,22 +9,27 @@ import jakarta.persistence.Id;
 public class PortfolioItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String symbol;
-    //TODO: buy() -> increase shares
     private double shares;
     private double purchasePrice;
-    //TODO: figure out conversion from SQL DATETIME
     private String purchaseDate;
-
 
     public String getPurchaseDate() {
         return purchaseDate;
     }
 
+    public void setPurchaseDate(String purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
     public double getPurchasePrice() {
         return purchasePrice;
+    }
+
+    public void setPurchasePrice(double purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public double getShares() {
@@ -33,6 +38,10 @@ public class PortfolioItem {
 
     public void setShares(double shares) {
         this.shares = shares;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getSymbol() {
