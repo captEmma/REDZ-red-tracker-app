@@ -1,7 +1,6 @@
 package com.redz.financeportfolio.controller;
 
-import com.redz.financeportfolio.exception.InsufficientFundsException;
-import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
+import com.redz.financeportfolio.exception.YahooApiException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
@@ -45,15 +44,19 @@ public class PortfolioController {
         }
     }
 
-    @GetMapping("/all")
-    public List<PortfolioItem> getAllItems(){
-        portfolioService.calculateNetWorth();
-        return portfolioService.getAllItems();
+    @GetMapping("/user/networth")
+    public ResponseEntity<?> getNetworth(){
+        try {
+            double value = portfolioService.getNetworth();
+            return ResponseEntity.ok(value);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @GetMapping("/user/{id}")
-    public User getUser(@PathVariable Integer id){
-        return portfolioService.getUser(id);
+    @GetMapping("/user")
+    public User getUser(){
+        return portfolioService.getUser();
     }
 
     @GetMapping("/user/all")
@@ -62,11 +65,15 @@ public class PortfolioController {
     }
 
     @GetMapping("/yahoo/{stock}")
-    public ResponseEntity<StockData> getStockData(
+    public ResponseEntity<?> getStockData(
             @PathVariable String stock,
             @RequestParam(defaultValue = "1d") String period,
             @RequestParam(defaultValue = "1d") String interval) {
-        StockData stockData = yahooFinanceService.getStockData(stock, period, interval);
-        return ResponseEntity.ok(stockData);
+        try {
+            StockData stockData = yahooFinanceService.getStockData(stock, period, interval);
+            return ResponseEntity.ok(stockData);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

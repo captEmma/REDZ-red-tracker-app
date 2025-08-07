@@ -1,7 +1,9 @@
 package com.redz.financeportfolio.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.redz.financeportfolio.exception.YahooApiException;
 import com.redz.financeportfolio.model.StockData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,7 @@ import java.util.Map;
 @Service
 public class YahooFinanceService {
     private final RestTemplate restTemplate = new RestTemplate();
-    public StockData getStockData(String stock, String period, String interval){
+    public StockData getStockData(String stock, String period, String interval) throws YahooApiException {
         String url = "http://localhost:5000/stocks/" + period + "/" + interval + "/" + stock;
 
         try{
@@ -45,14 +47,14 @@ public class YahooFinanceService {
                 stockData.setStockSplits(stockSplits);
                 return stockData;
             } else{
-                throw new RuntimeException("Bad request from python - flask service");
+                throw new YahooApiException();
             }
-        } catch (Exception e){
-            throw new RuntimeException("Failed to connect to flask server");
+        } catch (YahooApiException | JsonProcessingException e){
+            throw new YahooApiException();
         }
     }
 
-    public double getCurrentPrice(String symbol) {
+    public double getCurrentPrice(String symbol) throws YahooApiException {
         for(Double value : getStockData(symbol, "1d", "1d").getClose().values())
             return value;
         return 0;

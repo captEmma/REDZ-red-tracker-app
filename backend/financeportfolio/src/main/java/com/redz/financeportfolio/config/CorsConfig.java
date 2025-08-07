@@ -1,4 +1,4 @@
-package com.redz.financeportfolio.service;
+package com.redz.financeportfolio.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

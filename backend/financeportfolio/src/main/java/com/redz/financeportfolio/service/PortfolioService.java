@@ -1,8 +1,6 @@
 package com.redz.financeportfolio.service;
 
-import com.redz.financeportfolio.exception.InsufficientFundsException;
-import com.redz.financeportfolio.exception.InsufficientSharesException;
-import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
+import com.redz.financeportfolio.exception.*;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.model.Transaction;
@@ -22,7 +20,6 @@ public class PortfolioService {
     private final TransactionRepository transactionRepository;
 
     private User currentUser;
-    private int netWorth;
     //TODO: add fields to represent performance
 
     public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
@@ -32,20 +29,24 @@ public class PortfolioService {
         this.transactionRepository = transactionRepository;
     }
 
-    public double calculateNetWorth(){
+    public double getNetworth() throws YahooApiException, EmptyPortfolioException {
         List<PortfolioItem> items = getAllItems();
+        if (items.size() == 0) {
+            throw new EmptyPortfolioException();
+        }
+        double portfolioValue = 0;
         for(PortfolioItem item : items){
             String symbol = item.getSymbol();
             double shares = item.getShares();
-            double currentPrice = new YahooFinanceService().getCurrentPrice(symbol);
+            double currentPrice;
+            currentPrice = new YahooFinanceService().getCurrentPrice(symbol);
 
-            netWorth+=shares*currentPrice;
+            portfolioValue+=shares*currentPrice;
         }
-        System.out.println(netWorth);
-        return netWorth;
+        return portfolioValue + currentUser.getCash();
     }
 
-    public PortfolioItem buyShares(String symbol, double cost){
+    public PortfolioItem buyShares(String symbol, double cost) throws InsufficientFundsException, StockSymbolNotFoundException {
         if(cost>currentUser.getCash()) {
             throw new InsufficientFundsException();
         }
@@ -76,7 +77,7 @@ public class PortfolioService {
         return repository.save(new PortfolioItem(symbol, shares, cost));
     }
 
-    public PortfolioItem sellShares(String symbol, double shares){
+    public PortfolioItem sellShares(String symbol, double shares) throws StockSymbolNotFoundException, InsufficientSharesException {
         double sellPrice;
         try {
             StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
@@ -86,7 +87,6 @@ public class PortfolioService {
         }
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
-        transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -99,10 +99,16 @@ public class PortfolioService {
                 userRepository.save(currentUser);
 
                 existingStock.sellStock(shares, sellFor);
-                return repository.save(existingStock);
+                PortfolioItem portfolioItem = repository.save(existingStock);
+                transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
+                return portfolioItem;
             }
+            else {
+                throw new InsufficientSharesException();
+            }
+        } else {
+            throw new StockSymbolNotFoundException();
         }
-        throw new InsufficientSharesException();
     }
 
     public List<PortfolioItem> getAllItems(){
@@ -113,8 +119,7 @@ public class PortfolioService {
         return userRepository.findAll();
     }
 
-    public User getUser(Integer id){
-        Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElse(null);
+    public User getUser(){
+        return userRepository.findAll().getFirst();
     }
 }
