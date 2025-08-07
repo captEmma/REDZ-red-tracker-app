@@ -18,7 +18,7 @@ public class PortfolioService {
     private final PortfolioRepository repository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
-
+    private static final YahooFinanceService yahooFinanceService = new YahooFinanceService();
     private User currentUser;
     //TODO: add fields to represent performance
 
@@ -29,9 +29,20 @@ public class PortfolioService {
         this.transactionRepository = transactionRepository;
     }
 
+    //TODO finish this method
+    public double getDifference(PortfolioItem item) throws YahooApiException {
+        double currentPrice = yahooFinanceService.getCurrentPrice(item.getSymbol());
+        Optional<PortfolioItem> itemOptional = repository.findById(item.getSymbol());
+
+        if(itemOptional.isPresent()){
+
+        }
+        return 0;
+    }
+
     public double getNetworth() throws YahooApiException, EmptyPortfolioException {
         List<PortfolioItem> items = getAllItems();
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             throw new EmptyPortfolioException();
         }
         double portfolioValue = 0;
@@ -39,7 +50,7 @@ public class PortfolioService {
             String symbol = item.getSymbol();
             double shares = item.getShares();
             double currentPrice;
-            currentPrice = new YahooFinanceService().getCurrentPrice(symbol);
+            currentPrice = yahooFinanceService.getCurrentPrice(symbol);
 
             portfolioValue+=shares*currentPrice;
         }
@@ -55,7 +66,7 @@ public class PortfolioService {
 
         double purchasePrice;
         try {
-            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            StockData stockData =  yahooFinanceService.getStockData(symbol, "1d", "1d");
             purchasePrice = stockData.getCurrentPrice();
 
         } catch (Exception e){
@@ -83,7 +94,7 @@ public class PortfolioService {
     public PortfolioItem sellShares(String symbol, double shares) throws StockSymbolNotFoundException, InsufficientSharesException {
         double sellPrice;
         try {
-            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            StockData stockData = yahooFinanceService.getStockData(symbol, "1d", "1d");
             sellPrice = stockData.getCurrentPrice();
         } catch (Exception e){
             throw new StockSymbolNotFoundException();

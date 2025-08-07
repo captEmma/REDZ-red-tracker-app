@@ -56,6 +56,11 @@ public class PortfolioController {
         }
     }
 
+    @GetMapping("/allstocks")
+    public List<PortfolioItem> getAllStocks(){
+        return portfolioService.getAllItems();
+    }
+
     @GetMapping("/allcompanies")
     public List<Map<String, String>> getAllCompanies() {
         return Companies.getAll();
