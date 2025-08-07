@@ -62,10 +62,16 @@
 
 .investment {
   width: 400px;
+  border: 1px #a04764 solid;
+  width: 400px;
   padding: 20px 0px;
 }
 
 .investment-title {
+  background-color: #88304e;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
   font-weight: bold;
   color: #ffffff;
   font-size: 20px;
@@ -75,12 +81,16 @@
 
 .investment-item {
   padding: 5px 0px;
+  border: 1px #a04764 solid;
+  padding: 5px 0px;
   color: #ffffff;
   &:hover {
     background-color: #f7373716;
   }
 }
 
+.investment-item-amount,
+.investment-amount,
 .investment-item-shares-count {
   text-align: right;
 }
