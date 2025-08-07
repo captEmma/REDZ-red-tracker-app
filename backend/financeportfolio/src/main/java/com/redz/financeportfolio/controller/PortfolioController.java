@@ -1,5 +1,7 @@
 package com.redz.financeportfolio.controller;
 
+import com.redz.financeportfolio.exception.InsufficientFundsException;
+import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
@@ -24,13 +26,23 @@ public class PortfolioController {
     }
 
     @PutMapping("/buy/{symbol}/{cost}")
-    public PortfolioItem buyShares(@PathVariable String symbol, @PathVariable double cost){
-        return portfolioService.buyShares(symbol, cost);
+    public ResponseEntity<?> buyShares(@PathVariable String symbol, @PathVariable double cost){
+        try {
+            PortfolioItem portfolioItem = portfolioService.buyShares(symbol, cost);
+            return ResponseEntity.ok(portfolioItem);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/sell/{symbol}/{numberOfShares}")
-    public PortfolioItem sellShares(@PathVariable String symbol, @PathVariable double numberOfShares){
-        return portfolioService.sellShares(symbol, numberOfShares);
+    public ResponseEntity<?> sellShares(@PathVariable String symbol, @PathVariable double numberOfShares){
+        try {
+            PortfolioItem portfolioItem = portfolioService.sellShares(symbol, numberOfShares);
+            return ResponseEntity.ok(portfolioItem);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/all")

@@ -2,6 +2,7 @@ import "./App.css";
 import { useService } from "./api/Service";
 import { useEffect, useState } from "react";
 import Investment from "./components/Investment";
+import Skeleton from "./components/Skeleton";
 
 function App() {
   const { getStocks, getStocksLastXDays } = useService();
@@ -41,7 +42,7 @@ function App() {
 
   return (
     <>
-      <Investment />
+      <Skeleton />
     </>
   );
 }
