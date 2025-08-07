@@ -5,8 +5,10 @@ import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.StockData;
+import com.redz.financeportfolio.model.Transaction;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.repository.PortfolioRepository;
+import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +19,17 @@ import java.util.Optional;
 public class PortfolioService {
     private final PortfolioRepository repository;
     private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
     private User currentUser;
     private int netWorth;
     //TODO: add fields to represent performance
 
-    public PortfolioService(PortfolioRepository repository, UserRepository userRepository){
+    public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
         this.repository = repository;
         this.userRepository = userRepository;
         currentUser = userRepository.findAll().getFirst();
+        this.transactionRepository = transactionRepository;
     }
 
     public double calculateNetWorth(){
@@ -60,6 +64,7 @@ public class PortfolioService {
         double shares =  cost/purchasePrice;
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -81,6 +86,7 @@ public class PortfolioService {
         }
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -101,5 +107,14 @@ public class PortfolioService {
 
     public List<PortfolioItem> getAllItems(){
         return repository.findAll();
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public User getUser(Integer id){
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 }
