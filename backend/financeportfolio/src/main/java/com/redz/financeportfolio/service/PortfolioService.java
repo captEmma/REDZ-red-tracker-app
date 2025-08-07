@@ -5,8 +5,10 @@ import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.StockData;
+import com.redz.financeportfolio.model.Transaction;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.repository.PortfolioRepository;
+import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,17 @@ import java.util.Optional;
 public class PortfolioService {
     private final PortfolioRepository repository;
     private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
     private User currentUser;
     private int netWorth;
     //TODO: add fields to represent performance
 
-    public PortfolioService(PortfolioRepository repository, UserRepository userRepository){
+    public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
         this.repository = repository;
         this.userRepository = userRepository;
         currentUser = userRepository.findAll().getFirst();
+        this.transactionRepository = transactionRepository;
     }
 
     public double calculateNetWorth(){
@@ -69,6 +73,7 @@ public class PortfolioService {
             return repository.save(existingStock);
         }
 
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
         return repository.save(new PortfolioItem(symbol, shares, cost));
     }
 

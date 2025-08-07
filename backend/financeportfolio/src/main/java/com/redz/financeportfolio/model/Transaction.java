@@ -10,6 +10,8 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(length = 10)
     private String symbol;
     private double purchasePrice;
     private double shares;
@@ -19,7 +21,7 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(String symbol, double purchasePrice, double shares) {
+    public Transaction(String symbol, double shares, double purchasePrice) {
         this.symbol = symbol;
         this.purchasePrice = purchasePrice;
         this.shares = shares;
