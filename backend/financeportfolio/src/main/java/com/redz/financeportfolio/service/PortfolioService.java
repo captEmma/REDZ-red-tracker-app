@@ -5,6 +5,7 @@ import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.UserRepository;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -89,5 +90,14 @@ public class PortfolioService {
 
     public List<PortfolioItem> getAllItems(){
         return repository.findAll();
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public User getUser(Integer id){
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 }

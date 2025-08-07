@@ -1,6 +1,7 @@
 package com.redz.financeportfolio.controller;
 
 import com.redz.financeportfolio.model.PortfolioItem;
+import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
 import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.service.YahooFinanceService;
@@ -36,6 +37,16 @@ public class PortfolioController {
     public List<PortfolioItem> getAllItems(){
         portfolioService.calculateNetWorth();
         return portfolioService.getAllItems();
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable Integer id){
+        return portfolioService.getUser(id);
+    }
+
+    @GetMapping("/user/all")
+    public List<User> getUsers(){
+        return portfolioService.getAllUsers();
     }
 
     @GetMapping("/yahoo/{stock}")
