@@ -1,42 +1,70 @@
-/* body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #faf1f1;
-  text-align: center;
-  color: #ffffff;
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h2 {
-  color: #ffffff;
-  font-size: 18px;
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-h1 {
-  color: #36463b;
-  font-size: 28px;
-  text-align: center;
-}
-p {
-  color: #ffffff;
-  padding: 10px;
-}
-.button {
-  background-color: #1d2d44;
-  color: #fff;
-  cursor: pointer;
-  border: 0px solid #fff;
-  margin: 10px 0;
-  border-radius: 10px;
+.stock-button {
   font-weight: bold;
-  height: 60px;
-  width: 200px;
+  font-size: 20px;
+  background-color: #a13030;
+  border: 0px transparent;
+  border-radius: 10px;
+  margin: 10px 0px 20px 0px;
+  padding: 10px 20px 10px 10px;
+  color: #ffffff;
+  transition-duration: 0.2s;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #622323;
+    scale: 0.95;
+  }
 }
-.button:hover {
-  border: 5px solid #969393;
+
+.show-button {
+  font-weight: bold;
+  font-size: 15px;
+  background-color: #a13030;
+  border: 0px transparent;
+  border-radius: 10px;
+  margin: 20px 0px;
+  padding: 10px 20px;
+  color: #ffffff;
+  transition-duration: 0.2s;
+
+  &:hover {
+    background-color: #622323;
+    scale: 0.95;
+  }
+}
+
+.component-bg {
+  background-color: #181010;
+  border-radius: 10px;
+  width: max-content;
+}
+
+.manage-stocks {
+  padding: 15px 40px;
+}
+
+.or {
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .investment {
   width: 400px;
   border: 1px #a04764 solid;
+  width: 400px;
+  padding: 20px 0px;
 }
 
 .investment-title {
@@ -44,18 +72,42 @@ p {
   font-weight: bold;
   text-transform: uppercase;
   color: #ffffff;
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
 .investment-item {
   padding: 5px 0px;
   border: 1px #a04764 solid;
+  padding: 5px 0px;
+  color: #ffffff;
+  &:hover {
+    background-color: #f7373716;
+  }
 }
 
 .investment-item-amount,
-.investment-amount {
+.investment-amount,
+.investment-item-shares-count {
   text-align: right;
 }
 
-.investment-item:nth-child(even) {
-  background-color: #f7374e16;
-} */
+.doughnut {
+  position: relative;
+  width: 400px;
+  padding: 30px;
+}
+
+.doughnut-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
