@@ -82,6 +82,8 @@ p {
   font-weight: bold;
   height: 60px;
   width: 200px;
+  float: right; /* added but it may need removing
+  */
 }
 .button:hover {
   border: 5px solid #969393;

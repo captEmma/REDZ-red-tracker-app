@@ -2,6 +2,8 @@ import Container from "react-bootstrap/esm/Container";
 import "./Skeleton.css";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
+import Metric from "./Metric.jsx";
+
 const Skeleton = () => {
   return (
     <>
@@ -13,13 +15,7 @@ const Skeleton = () => {
             </div>
           </Col>
           <Col>
-            <button
-              class="button"
-              onclick="location.href='default.html';"
-              style={{ float: "right" }}
-            >
-              Manage Funds
-            </button>
+            <button className="button">Manage Funds</button>
           </Col>
         </Row>
       </Container>
@@ -31,21 +27,11 @@ const Skeleton = () => {
               <h2>
                 <b>Gainers</b>
               </h2>
-              <br />
-
-              <img
-                src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
-                height="200px"
-                width="200px"
-              ></img>
-              <br />
-              <br />
+              <Metric />
 
               <h2>
                 <b>Losers</b>
               </h2>
-
-              <br />
               <img
                 src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
                 height="200px"
