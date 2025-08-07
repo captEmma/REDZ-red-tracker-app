@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "portfolio_item")
 public class PortfolioItem {
     @Id
+    @Column(length = 10)
     private String symbol;
     private double shares;
     private double purchasePrice;

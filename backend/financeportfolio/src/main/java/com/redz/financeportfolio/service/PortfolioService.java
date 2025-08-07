@@ -1,9 +1,14 @@
 package com.redz.financeportfolio.service;
 
+import com.redz.financeportfolio.exception.InsufficientFundsException;
+import com.redz.financeportfolio.exception.InsufficientSharesException;
+import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.StockData;
+import com.redz.financeportfolio.model.Transaction;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.repository.PortfolioRepository;
+import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +19,17 @@ import java.util.Optional;
 public class PortfolioService {
     private final PortfolioRepository repository;
     private final UserRepository userRepository;
+    private final TransactionRepository transactionRepository;
 
     private User currentUser;
     private int netWorth;
     //TODO: add fields to represent performance
 
-    public PortfolioService(PortfolioRepository repository, UserRepository userRepository){
+    public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
         this.repository = repository;
         this.userRepository = userRepository;
         currentUser = userRepository.findAll().getFirst();
+        this.transactionRepository = transactionRepository;
     }
 
     public double calculateNetWorth(){
@@ -40,18 +47,24 @@ public class PortfolioService {
 
     public PortfolioItem buyShares(String symbol, double cost){
         if(cost>currentUser.getCash()) {
-            //TODO figure out what to do with exceptions
-            throw new RuntimeException("Not enough cash!");
+            throw new InsufficientFundsException();
         }
         currentUser.buyStock(cost);
         userRepository.save(currentUser);
 
-        StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+        double purchasePrice;
+        try {
+            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            purchasePrice = stockData.getCurrentPrice();
 
-        double purchasePrice = stockData.getCurrentPrice();
+        } catch (Exception e){
+            throw new StockSymbolNotFoundException();
+        }
+
         double shares =  cost/purchasePrice;
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -64,10 +77,16 @@ public class PortfolioService {
     }
 
     public PortfolioItem sellShares(String symbol, double shares){
-        StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
-        double sellPrice = stockData.getCurrentPrice();
+        double sellPrice;
+        try {
+            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            sellPrice = stockData.getCurrentPrice();
+        } catch (Exception e){
+            throw new StockSymbolNotFoundException();
+        }
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -83,11 +102,19 @@ public class PortfolioService {
                 return repository.save(existingStock);
             }
         }
-        //TODO figure out what to do with exceptions
-        throw new RuntimeException("Couldn't sell stocks");
+        throw new InsufficientSharesException();
     }
 
     public List<PortfolioItem> getAllItems(){
         return repository.findAll();
+    }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public User getUser(Integer id){
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 }
