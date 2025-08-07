@@ -1,6 +1,9 @@
 package com.redz.financeportfolio.controller;
 
+import com.redz.financeportfolio.exception.InsufficientFundsException;
+import com.redz.financeportfolio.exception.StockSymbolNotFoundException;
 import com.redz.financeportfolio.model.PortfolioItem;
+import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
 import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.service.YahooFinanceService;
@@ -9,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PortfolioController {
@@ -23,19 +25,40 @@ public class PortfolioController {
         this.portfolioService = portfolioService;
     }
 
-    @PostMapping("/add")
-    public PortfolioItem addItem(@RequestBody PortfolioItem item){
-        return portfolioService.addItem(item);
+    @PutMapping("/buy/{symbol}/{cost}")
+    public ResponseEntity<?> buyShares(@PathVariable String symbol, @PathVariable double cost){
+        try {
+            PortfolioItem portfolioItem = portfolioService.buyShares(symbol, cost);
+            return ResponseEntity.ok(portfolioItem);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
-    @DeleteMapping("/remove/{id}")
-    public void removeItem(@PathVariable Integer id){
-        portfolioService.removeItem(id);
+    @PutMapping("/sell/{symbol}/{numberOfShares}")
+    public ResponseEntity<?> sellShares(@PathVariable String symbol, @PathVariable double numberOfShares){
+        try {
+            PortfolioItem portfolioItem = portfolioService.sellShares(symbol, numberOfShares);
+            return ResponseEntity.ok(portfolioItem);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/all")
     public List<PortfolioItem> getAllItems(){
+        portfolioService.calculateNetWorth();
         return portfolioService.getAllItems();
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUser(@PathVariable Integer id){
+        return portfolioService.getUser(id);
+    }
+
+    @GetMapping("/user/all")
+    public List<User> getUsers(){
+        return portfolioService.getAllUsers();
     }
 
     @GetMapping("/yahoo/{stock}")
