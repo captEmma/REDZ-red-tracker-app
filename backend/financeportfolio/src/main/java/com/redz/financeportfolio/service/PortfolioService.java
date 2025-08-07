@@ -10,7 +10,6 @@ import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,6 +64,7 @@ public class PortfolioService {
         double shares =  cost/purchasePrice;
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
@@ -73,7 +73,6 @@ public class PortfolioService {
             return repository.save(existingStock);
         }
 
-        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
         return repository.save(new PortfolioItem(symbol, shares, cost));
     }
 
@@ -87,6 +86,7 @@ public class PortfolioService {
         }
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
+        transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
