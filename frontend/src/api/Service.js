@@ -13,7 +13,7 @@ export const useService = () => {
   };
   const getAllData = async () => {
     try {
-      const response = await httpInstance.get("/all");
+      const response = await httpInstance.get("/allcompanies");
       return response.data;
     } catch (e) {
       console.error("error getting data - " + e);
@@ -21,7 +21,7 @@ export const useService = () => {
   };
   const getUser = async () => {
     try {
-      const response = await httpInstance.get("/user/1");
+      const response = await httpInstance.get("/user");
       return response.data;
     } catch (e) {
       console.error("error getting user - " + e);
@@ -35,6 +35,14 @@ export const useService = () => {
       console.error("error getting user - " + e);
     }
   };
+  const getNetworth = async () => {
+    try {
+      const response = await httpInstance.get("/user/networth");
+      return response.data;
+    } catch (e) {
+      console.error("error getting user - " + e);
+    }
+  };
 
   const getStocksLastXDays = async (period) => {
     const result = await httpInstance.get(
@@ -42,10 +50,8 @@ export const useService = () => {
     );
     return result.data;
   };
-  // not an endpoint?
 
   const buyShares = async (symbol, cost) => {
-    //naming conventions?
     try {
       const response = await httpInstance.put(`/buy/${symbol}/${cost}`);
       return response.data;
@@ -71,5 +77,6 @@ export const useService = () => {
     getAllData,
     getAllUsers,
     getUser,
+    getNetworth,
   };
 };

@@ -8,11 +8,12 @@ function App() {
   const {
     getShare,
     getStocksLastXDays,
-    getAllData,
-    getAllUsers,
     getUser,
+    getAllUsers,
+    getAllData,
     buyShares,
     sellShares,
+    getNetworth,
   } = useService();
   const [stocks, setStocks] = useState();
   const [multipleStocks, setMultipleStocks] = useState();
