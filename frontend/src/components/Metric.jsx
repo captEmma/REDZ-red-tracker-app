@@ -36,7 +36,7 @@ const Metric = () => {
         </Row>
         <Row>
           <button
-            class="show-all"
+            className="show-all"
             //   onclick="location.href='default.html';"
           >
             Show All

@@ -47,7 +47,7 @@ export const useService = () => {
   const buyShares = async (symbol, cost) => {
     //naming conventions?
     try {
-      const response = await httpInstance.get(`/buy/${symbol}/${cost}`);
+      const response = await httpInstance.put(`/buy/${symbol}/${cost}`);
       return response.data;
     } catch (e) {
       console.error("error getting data - " + e);
@@ -56,7 +56,7 @@ export const useService = () => {
 
   const sellShares = async (symbol, numShares) => {
     try {
-      const response = await httpInstance.get(`/sell/${symbol}/${numShares}`);
+      const response = await httpInstance.put(`/sell/${symbol}/${numShares}`);
       return response.data;
     } catch (e) {
       console.error("error getting data - " + e);

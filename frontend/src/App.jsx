@@ -46,7 +46,7 @@ function App() {
   // }, [getStocksLastXDays, multipleStocks]);
 
   console.log(stocks);
-  console.log(multipleStocks);
+  // console.log(multipleStocks);
 
   return (
     <>
