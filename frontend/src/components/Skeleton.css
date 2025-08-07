@@ -27,56 +27,44 @@ body {
 }
 
 #main-container {
-  display: flex;
-  width: 95%;
   background-color: #ffffff;
-  padding: 1px;
   border-radius: 8px;
-  height: 100%;
-
-  /* display: block; */
+  padding: 20px;
 }
 
 #left-container {
-  height: 100%;
-  width: 30%;
   border-radius: 8px;
   background-color: #ad2831;
-  margin: 10px;
   padding: 10px;
   text-align: center;
-  display: inline;
-  float: left;
+  margin: 0px;
 }
 #right-container {
-  height: 300px; /*can be made dynamic later please*/
-  width: 30%;
+  height: 55%;
   border-radius: 8px;
   background-color: #800e13;
-  margin: 10px;
   padding: 10px;
   text-align: center;
-  float: right;
+  margin: 0px;
+  margin-bottom: 5%;
 }
 #b-s-container {
   /*buy sell*/
-  height: 200px; /*can be made dynamic later please*/
-  width: 30%;
+  height: 42%; /* ammend later*/
   border-radius: 8px;
   background-color: #800e13;
-  margin: 10px;
   padding: 10px;
   text-align: center;
-  float: right;
+  margin: 0px;
 }
 
 h2 {
-  color: #ffffff;
-  font-size: 18px;
+  color: #ffffff !important;
+  font-size: 18px !important;
 }
 
 h1 {
-  color: #36463b;
+  color: #4f6356;
   font-size: 28px;
   text-align: center;
 }
