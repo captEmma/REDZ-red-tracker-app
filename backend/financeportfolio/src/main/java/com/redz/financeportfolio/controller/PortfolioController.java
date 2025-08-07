@@ -6,11 +6,13 @@ import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
 import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.service.YahooFinanceService;
+import com.redz.financeportfolio.util.Companies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class PortfolioController {
@@ -52,6 +54,11 @@ public class PortfolioController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/allcompanies")
+    public List<Map<String, String>> getAllCompanies() {
+        return Companies.getAll();
     }
 
     @GetMapping("/user")

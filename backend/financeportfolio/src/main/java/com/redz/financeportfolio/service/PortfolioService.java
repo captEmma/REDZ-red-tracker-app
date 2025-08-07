@@ -65,16 +65,19 @@ public class PortfolioService {
         double shares =  cost/purchasePrice;
 
         Optional<PortfolioItem> existingStockOptional = repository.findById(symbol);
-        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
+        PortfolioItem savedItem;
 
         if (existingStockOptional.isPresent()) {
             PortfolioItem existingStock = existingStockOptional.get();
 
             existingStock.buyStock(shares, cost);
-            return repository.save(existingStock);
+            savedItem = existingStock;
+        }else {
+            savedItem = new PortfolioItem(symbol, shares, cost);
         }
-
-        return repository.save(new PortfolioItem(symbol, shares, cost));
+        repository.save(savedItem);
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
+        return savedItem;
     }
 
     public PortfolioItem sellShares(String symbol, double shares) throws StockSymbolNotFoundException, InsufficientSharesException {

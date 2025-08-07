@@ -5,14 +5,23 @@ import Investment from "./components/Investment";
 import Skeleton from "./components/Skeleton";
 
 function App() {
-  const { getStocks, getStocksLastXDays } = useService();
+  const {
+    getShare,
+    getStocksLastXDays,
+    getUser,
+    getAllUsers,
+    getAllData,
+    buyShares,
+    sellShares,
+    getNetworth,
+  } = useService();
   const [stocks, setStocks] = useState();
   const [multipleStocks, setMultipleStocks] = useState();
 
   useEffect(() => {
     async function getStocksData() {
       try {
-        const stocks = await getStocks();
+        const stocks = await getAllData();
         setStocks(stocks);
       } catch (error) {
         console.log(error.response.data.errors);
@@ -21,24 +30,24 @@ function App() {
     if (!stocks) {
       getStocksData();
     }
-  }, [getStocks, stocks]);
+  }, [getAllData, stocks]);
 
-  useEffect(() => {
-    async function getMultipleStocks() {
-      try {
-        const multipleStocks = await getStocksLastXDays(7);
-        setMultipleStocks(multipleStocks);
-      } catch (error) {
-        console.log(error.response.data.errors);
-      }
-    }
-    if (!multipleStocks) {
-      getMultipleStocks();
-    }
-  }, [getStocksLastXDays, multipleStocks]);
+  // useEffect(() => {
+  //   async function getMultipleStocks() {
+  //     try {
+  //       const multipleStocks = await getStocksLastXDays(7);
+  //       setMultipleStocks(multipleStocks);
+  //     } catch (error) {
+  //       console.log(error.response.data.errors);
+  //     }
+  //   }
+  //   if (!multipleStocks) {
+  //     getMultipleStocks();
+  //   }
+  // }, [getStocksLastXDays, multipleStocks]);
 
   console.log(stocks);
-  console.log(multipleStocks);
+  // console.log(multipleStocks);
 
   return (
     <>
