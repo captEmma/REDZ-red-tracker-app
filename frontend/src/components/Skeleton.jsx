@@ -13,57 +13,53 @@ const Skeleton = () => {
             </div>
           </Col>
           <Col>
-            <button class="button" onclick="location.href='default.html';" style={{ float: "right" }}>
+            <button
+              class="button"
+              onclick="location.href='default.html';"
+              style={{ float: "right" }}
+            >
               Manage Funds
             </button>
           </Col>
         </Row>
       </Container>
-      {/* <div id="top">
-        <p style={{ textAlign: "left", display: "inline-block" }}>
-          Available Balance <b>$40000</b>
-        </p>
-       
-        <button
-          class="button"
-          onclick="location.href='default.html';"
-          style={{ float: "right" }}
-        >
-          Manage Funds
-        </button>
-        <br></br>
-      </div> */}
-      <div className="center-content">
-        <div id="main-container">
-          <div id="left-container">
-            <h2>
-              <b>Gainers</b> {/*should be white usnure why its black */}
-            </h2>
-            <br />
 
-            <img
-              src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
-              height="200px"
-              width="200px"
-            ></img>
-            <br />
-            <br />
+      <Container id="main-container">
+        <Row>
+          <Col md={3}>
+            <div id="left-container">
+              <h2>
+                <b>Gainers</b>
+              </h2>
+              <br />
 
-            <h2>
-              <b>Losers</b> {/*should be white usnure why its black */}
-            </h2>
+              <img
+                src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
+                height="200px"
+                width="200px"
+              ></img>
+              <br />
+              <br />
 
-            <br />
-            <img
-              src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
-              height="200px"
-              width="200px"
-            ></img>
-          </div>
-          <div id="right-container"></div>
-          <div id="b-s-container"></div>
-        </div>
-      </div>
+              <h2>
+                <b>Losers</b>
+              </h2>
+
+              <br />
+              <img
+                src="https://cdn.sanity.io/images/599r6htc/regionalized/128e6a1b9aba13b48886e276b4c02e5c6c68ec01-1108x1108.png?w=1200&q=70&fit=max&auto=format"
+                height="200px"
+                width="200px"
+              ></img>
+            </div>
+          </Col>
+          <Col></Col>
+          <Col md={3}>
+            <Row id="right-container"></Row>
+            <Row id="b-s-container"></Row>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 };
