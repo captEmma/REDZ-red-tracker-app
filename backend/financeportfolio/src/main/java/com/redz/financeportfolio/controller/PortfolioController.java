@@ -1,7 +1,9 @@
 package com.redz.financeportfolio.controller;
 
+import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.YahooApiException;
 import com.redz.financeportfolio.model.PortfolioItem;
+import com.redz.financeportfolio.model.Transaction;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
 import com.redz.financeportfolio.model.StockData;
@@ -56,14 +58,47 @@ public class PortfolioController {
         }
     }
 
-    @GetMapping("/allcompanies")
-    public List<Map<String, String>> getAllCompanies() {
-        return Companies.getAll();
+    @GetMapping("/allstocks")
+    public List<PortfolioItem> getAllStocks(){
+        return portfolioService.getAllItems();
     }
 
     @GetMapping("/user")
     public User getUser(){
         return portfolioService.getUser();
+    }
+
+    @GetMapping("/loadperformance")
+    public List<PortfolioItem> getSortedItems(){
+        return portfolioService.getItemsSortedByPerformance();
+    }
+
+    @GetMapping("/gainers")
+    public ResponseEntity<?> getGainers(@RequestParam(defaultValue = "3") int n){
+        try {
+            return ResponseEntity.ok(portfolioService.getTopNGainers(n));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/losers")
+    public ResponseEntity<?> getLosers(@RequestParam(defaultValue = "3") int n){
+        try {
+            return ResponseEntity.ok(portfolioService.getTopNLosers(n));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/user/recent")
+    public ResponseEntity<?> getRecentInvestments(){
+        try {
+            List<Transaction> recents = portfolioService.getRecentInvestments();
+            return ResponseEntity.ok(recents);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/user/all")
