@@ -106,9 +106,9 @@ public class PortfolioController {
     }
 
     @GetMapping("/user/recent")
-    public ResponseEntity<?> getRecentInvestments(){
+    public ResponseEntity<?> getRecentInvestments(@RequestParam(defaultValue = "10") int n){
         try {
-            List<Transaction> recents = portfolioService.getRecentInvestments();
+            List<Transaction> recents = portfolioService.getRecentInvestments(n);
             return ResponseEntity.ok(recents);
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

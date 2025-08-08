@@ -5,10 +5,10 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import Investment from "./components/Investment";
+import Investment from "./components/RecentInvestment/Investment";
 import Metric from "./components/Metric";
 import ManageStocks from "./components/Stocks/ManageStocks";
-import Skeleton from "./components/Skeleton";
+import GraphContainer from "./components/Graph/GraphContainer";
 
 function App() {
   return (
@@ -16,14 +16,16 @@ function App() {
       <Header />
       <Body>
         <Col md={3}>
-          <Row>
+          <Row id="left-container">
             <Metric title="Gainers" />
           </Row>
-          <Row>
+          <Row id="left-container">
             <Metric title="Losers" />
           </Row>
         </Col>
-        <Col></Col>
+        <Col md={6}>
+          <GraphContainer />
+        </Col>
         <Col md={3}>
           <Row id="right-container">
             <Investment />

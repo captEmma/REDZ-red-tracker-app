@@ -28,14 +28,12 @@ body {
   border-radius: 8px;
   padding: 25px;
   max-width: 90% !important;
+  margin-bottom: 30px;
 }
 
 #left-container {
   border-radius: 8px;
-  background-color: #ad2831;
-  padding: 10px;
-  text-align: center;
-  margin: 0px;
+  margin-bottom: 15px;
 }
 #right-container {
   margin-bottom: 15px;
