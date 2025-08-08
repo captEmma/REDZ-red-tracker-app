@@ -6,6 +6,7 @@
 - `use financeportfolio;`
 - `CREATE TABLE IF NOT EXISTS portfolio_item(
     symbol VARCHAR(10) PRIMARY KEY,
+    company_name VARCHAR(80),
     shares DOUBLE NOT NULL,
     purchase_price DOUBLE NOT NULL
 );`
@@ -17,9 +18,11 @@
 - `CREATE TABLE IF NOT EXISTS transactions(
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
     symbol VARCHAR(10) NOT NULL,
-    purchase_date TIMESTAMP NOT NULL,
-    purchase_price DOUBLE NOT NULL,
+    company_name VARCHAR(80),
     shares DOUBLE NOT NULL,
+    purchase_price DOUBLE NOT NULL,
+    cash DOUBLE NOT NULL,
+    purchase_date TIMESTAMP NOT NULL,
     foreign key (symbol) references portfolio_item(symbol)
 );`
 - `insert into users (username, cash) values ("tester", 500000);`
