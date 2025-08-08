@@ -1,5 +1,6 @@
 package com.redz.financeportfolio.model;
 
+import com.redz.financeportfolio.util.Companies;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
@@ -13,8 +14,9 @@ public class Transaction {
 
     @Column(length = 10)
     private String symbol;
-    private double purchasePrice;
+    private String companyName;
     private double shares;
+    private double purchasePrice;
 
     @CreationTimestamp
     private LocalDateTime purchaseDate;
@@ -23,6 +25,7 @@ public class Transaction {
 
     public Transaction(String symbol, double shares, double purchasePrice) {
         this.symbol = symbol;
+        this.companyName = Companies.getCompanyName(symbol);
         this.purchasePrice = purchasePrice;
         this.shares = shares;
     }

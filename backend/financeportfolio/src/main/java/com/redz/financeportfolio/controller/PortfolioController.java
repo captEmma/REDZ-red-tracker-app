@@ -3,6 +3,7 @@ package com.redz.financeportfolio.controller;
 import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.YahooApiException;
 import com.redz.financeportfolio.model.PortfolioItem;
+import com.redz.financeportfolio.model.Transaction;
 import com.redz.financeportfolio.model.User;
 import com.redz.financeportfolio.service.PortfolioService;
 import com.redz.financeportfolio.model.StockData;
@@ -62,11 +63,6 @@ public class PortfolioController {
         return portfolioService.getAllItems();
     }
 
-    @GetMapping("/allcompanies")
-    public List<Map<String, String>> getAllCompanies() {
-        return Companies.getAll();
-    }
-
     @GetMapping("/user")
     public User getUser(){
         return portfolioService.getUser();
@@ -91,6 +87,16 @@ public class PortfolioController {
         try {
             return ResponseEntity.ok(portfolioService.getTopNLosers(n));
         } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/user/recent")
+    public ResponseEntity<?> getRecentInvestments(){
+        try {
+            List<Transaction> recents = portfolioService.getRecentInvestments();
+            return ResponseEntity.ok(recents);
+        } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

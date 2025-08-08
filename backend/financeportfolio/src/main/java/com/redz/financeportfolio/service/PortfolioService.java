@@ -5,11 +5,11 @@ import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
+import com.redz.financeportfolio.util.Companies;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PortfolioService {
@@ -29,19 +29,23 @@ public class PortfolioService {
     }
 
     public List<PortfolioItem> getItemsSortedByPerformance(){
-        performanceSorted = repository.findAll().stream()
+        List<PortfolioItem> items = repository.findAll();
+        Map<PortfolioItem, Double> priceMap = new HashMap<>();
+
+        for(PortfolioItem item : items){
+            try {
+                double currentPrice = yahooFinanceService.getCurrentPrice(item.getSymbol());
+                priceMap.put(item, currentPrice);
+            } catch (YahooApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        performanceSorted = items.stream()
                 .sorted((first, second) -> {
-                    try {
-                        double secondPrice = yahooFinanceService.getCurrentPrice(second.getSymbol());
-                        double firstPrice = yahooFinanceService.getCurrentPrice(first.getSymbol());
+                    double firstValue = first.getShares()*priceMap.get(first);
+                    double secondValue = second.getShares()*priceMap.get(second);
 
-                        double secondValue = second.getShares() * secondPrice;
-                        double firstValue = first.getShares() * firstPrice;
-
-                        return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
-                    } catch (YahooApiException e) {
-                        throw new RuntimeException(e);
-                    }
+                    return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
                 })
                 .toList();
         return performanceSorted;
@@ -61,6 +65,14 @@ public class PortfolioService {
         if(performanceSorted.isEmpty())
             throw new Exception("Load performance first!");
         return performanceSorted.reversed().subList(0, n);
+    }
+
+    public List<Transaction> getRecentInvestments() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        Collections.reverse(transactions);
+        return transactions.stream()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     public double getNetworth() throws YahooApiException, EmptyPortfolioException {
