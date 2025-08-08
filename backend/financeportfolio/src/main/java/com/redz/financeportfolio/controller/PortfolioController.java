@@ -2,11 +2,8 @@ package com.redz.financeportfolio.controller;
 
 import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.YahooApiException;
-import com.redz.financeportfolio.model.PortfolioItem;
-import com.redz.financeportfolio.model.Transaction;
-import com.redz.financeportfolio.model.User;
+import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.service.PortfolioService;
-import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.service.YahooFinanceService;
 import com.redz.financeportfolio.util.Companies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class PortfolioController {
@@ -48,6 +46,16 @@ public class PortfolioController {
         }
     }
 
+    @GetMapping("/user/history")
+    public ResponseEntity<?> getNethworthHistory(){
+        try {
+            Map<Long, Double> history = portfolioService.getNethworthHistory();
+            return ResponseEntity.ok(history);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/user/networth")
     public ResponseEntity<?> getNetworth(){
         try {
@@ -56,6 +64,11 @@ public class PortfolioController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/companies")
+    public Map<String, String> getAllCompanies(){
+        return Companies.COMPANYNAMES;
     }
 
     @GetMapping("/allstocks")
@@ -69,7 +82,7 @@ public class PortfolioController {
     }
 
     @GetMapping("/loadperformance")
-    public List<PortfolioItem> getSortedItems(){
+    public List<ItemPerformanceDTO> getSortedItems(){
         return portfolioService.getItemsSortedByPerformance();
     }
 

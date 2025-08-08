@@ -1,32 +1,36 @@
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import StockButton from "./StockButton";
 import { useEffect, useState } from "react";
-import Modal from "./Modal";
-import Button from "./Button";
-import { useManageFormHook } from "../hooks/ManageFormHook";
-import { useService } from "../api/Service";
+import Modal from "../Modal";
+import Button from "../Button";
+import { useManageFormHook } from "../../hooks/ManageFormHook";
+import { useService } from "../../api/Service";
 
 const ManageStocks = () => {
   const [isBuyingOpen, setIsBuyingOpen] = useState(false);
   const [isSellingOpen, setIsSellingOpen] = useState(false);
   const [companies, setCompanies] = useState([]);
 
-  const { getAllData } = useService();
+  const { getCompanies } = useService();
 
   useEffect(() => {
     async function getCompaniesData() {
       try {
-        const companies = await getAllData();
-        const uniqueCompanies = Array.from(new Map(companies.map((company) => [company.symbol, company])).values());
+        const companies = await getCompanies();
+        const companiesArray = Object.entries(companies).map(([symbol, name]) => ({
+          symbol,
+          name,
+        }));
+        const uniqueCompanies = Array.from(new Map(companiesArray.map((company) => [company.symbol, company])).values());
         setCompanies(uniqueCompanies);
       } catch (error) {
-        console.log(error.response.data.errors);
+        console.log(error);
       }
     }
     if (companies.length < 1) {
       getCompaniesData();
     }
-  }, [companies.length, getAllData]);
+  }, [companies.length, getCompanies]);
 
   const {
     buyForm: { register: registerBuy, handleSubmit: handleSubmitBuy, errors: buyErrors },

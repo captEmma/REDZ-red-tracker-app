@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route("/stocks/<period>/<interval>/<stock>")
 def stocks(stock, period, interval):
     ticker = yf.Ticker(stock)
-
+  #TODO ticker.info["longName"]
     data = ticker.history(period=period, interval=interval).to_json()
 
     actions = ticker.actions.to_json()
