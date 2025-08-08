@@ -2,6 +2,10 @@
 
 ## Presentation
 
+- 20 min for the presentation
+- 2 min per slide and 4 min for the demo
+- As many graphics and as little text
+
 ### What have you been learning over the last 4 weeks?
 Sql, flask, 
 
