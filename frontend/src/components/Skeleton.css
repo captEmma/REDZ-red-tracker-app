@@ -28,6 +28,7 @@ body {
   border-radius: 8px;
   padding: 25px;
   max-width: 90% !important;
+  margin-bottom: 30px;
 }
 
 #left-container {
