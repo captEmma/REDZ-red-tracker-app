@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import Body from "./components/Body";
 import Investment from "./components/Investment";
 import Metric from "./components/Metric";
-import ManageStocks from "./components/ManageStocks";
+import ManageStocks from "./components/Stocks/ManageStocks";
 import Skeleton from "./components/Skeleton";
 
 function App() {
