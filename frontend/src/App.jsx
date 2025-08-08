@@ -8,7 +8,6 @@ import Body from "./components/Body";
 import Investment from "./components/Investment";
 import Metric from "./components/Metric";
 import ManageStocks from "./components/Stocks/ManageStocks";
-import Skeleton from "./components/Skeleton";
 
 function App() {
   return (
@@ -16,10 +15,10 @@ function App() {
       <Header />
       <Body>
         <Col md={3}>
-          <Row>
+          <Row id="left-container">
             <Metric title="Gainers" />
           </Row>
-          <Row>
+          <Row id="left-container">
             <Metric title="Losers" />
           </Row>
         </Col>

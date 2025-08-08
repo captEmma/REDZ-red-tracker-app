@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 
 const Metric = ({ title }) => {
-  const { getGainers, loadPerformance } = useService();
+  const { getGainers, loadPerformance, getLosers } = useService();
   const [stocks, setStocks] = useState();
+  const [lStocks, setlStocks] = useState();
 
   useEffect(() => {
     async function getStocksData() {
@@ -25,30 +26,72 @@ const Metric = ({ title }) => {
     }
   }, [getGainers, loadPerformance, stocks]);
 
-  return (
-    <>
-      {stocks && (
-        <div className="px-0">
-          <Container className="component-bg metric">
-            <div className="metric-title">{title}</div>
-            <Row>
-              {stocks.map((data) => (
-                <MetricItem
-                  key={data.symbol}
-                  symbol={data.symbol}
-                  name={data.companyName}
-                  price={data.purchasePrice}
-                />
-              ))}
-            </Row>
-            <Row>
-              <Button title="show all" />
-            </Row>
-          </Container>
-        </div>
-      )}
-    </>
-  );
+  useEffect(() => {
+    async function getLoserData() {
+      try {
+        await loadPerformance();
+        const lStocks = await getLosers();
+        setlStocks(lStocks);
+      } catch (error) {
+        console.log(error.response.data.errors);
+      }
+    }
+    if (!lStocks) {
+      getLoserData();
+    }
+  }, [getLosers, loadPerformance, lStocks]);
+
+  if (title == "Gainers") {
+    return (
+      <>
+        {stocks && (
+          <div className="px-0">
+            <Container className="component-bg metric">
+              <div className="metric-title">{title}</div>
+              <Row>
+                {stocks.map((data) => (
+                  <MetricItem
+                    key={data.item.symbol}
+                    symbol={data.item.symbol}
+                    name={data.item.companyName}
+                    performance={Math.round(data.performance * 10000) / 100}
+                  />
+                ))}
+              </Row>
+              <Row>
+                <Button title="show all" />
+              </Row>
+            </Container>
+          </div>
+        )}
+      </>
+    );
+  } else if (title == "Losers") {
+    return (
+      <>
+        {lStocks && (
+          <div className="px-0">
+            <Container className="component-bg metric">
+              <div className="metric-title">{title}</div>
+              <Row>
+                {lStocks.map((data) => (
+                  <MetricItem
+                    key={data.item.symbol}
+                    symbol={data.item.symbol}
+                    name={data.item.companyName}
+                    performance={Math.round(data.performance * 10000) / 100}
+                  />
+                ))}
+              </Row>
+              <Row>
+                <Button title="show all" />
+              </Row>
+            </Container>
+          </div>
+        )}
+      </>
+    );
+  }
 };
 
 export default Metric;
