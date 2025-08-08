@@ -11,9 +11,10 @@ export const useService = () => {
       console.error("error getting data - " + e);
     }
   };
-  const getAllData = async () => {
+
+  const getAllShares = async () => {
     try {
-      const response = await httpInstance.get("/allcompanies");
+      const response = await httpInstance.get("/allstocks");
       return response.data;
     } catch (e) {
       console.error("error getting data - " + e);
@@ -35,20 +36,47 @@ export const useService = () => {
       console.error("error getting user - " + e);
     }
   };
+
+  const getUserRecent = async () => {
+    try {
+      const response = await httpInstance.get("/user/recent");
+      return response.data;
+    } catch (e) {
+      console.error("error getting data - " + e);
+    }
+  };
   const getNetworth = async () => {
     try {
       const response = await httpInstance.get("/user/networth");
+      return response.data;
+    } catch (e) {
+      console.error("error getting user data - " + e);
+    }
+  };
+  const getGainers = async () => {
+    try {
+      const response = await httpInstance.get("/gainers");
+      return response.data;
+    } catch (e) {
+      console.error("error getting user - " + e);
+    }
+  };
+  const getLosers = async () => {
+    try {
+      const response = await httpInstance.get("/losers");
       return response.data;
     } catch (e) {
       console.error("error getting user - " + e);
     }
   };
 
-  const getStocksLastXDays = async (period) => {
-    const result = await httpInstance.get(
-      `/yahoo/TSLA?period=${period}d&interval=1d`
-    );
-    return result.data;
+  const loadPerformance = async () => {
+    try {
+      const response = await httpInstance.get("/loadperformance");
+      return response.data;
+    } catch (e) {
+      console.error("error getting user - " + e);
+    }
   };
 
   const buyShares = async (symbol, cost) => {
@@ -71,12 +99,15 @@ export const useService = () => {
 
   return {
     getShare,
-    getStocksLastXDays,
     sellShares,
     buyShares,
-    getAllData,
     getAllUsers,
     getUser,
     getNetworth,
+    getAllShares,
+    getGainers,
+    getLosers,
+    loadPerformance,
+    getUserRecent,
   };
 };
