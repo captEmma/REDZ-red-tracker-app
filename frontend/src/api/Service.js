@@ -45,6 +45,16 @@ export const useService = () => {
       console.error("error getting data - " + e);
     }
   };
+
+  const getUserRecentNAmount = async (amount) => {
+    try {
+      const response = await httpInstance.get(`/user/recent?n=${amount}`);
+      return response.data;
+    } catch (e) {
+      console.error("error getting data - " + e);
+    }
+  };
+
   const getNetworth = async () => {
     try {
       const response = await httpInstance.get("/user/networth");
@@ -97,15 +107,6 @@ export const useService = () => {
     }
   };
 
-  const getRecentShares = async () => {
-    try {
-      const response = await httpInstance.get("/user/recent");
-      return response.data;
-    } catch (e) {
-      console.error("error getting data - " + e);
-    }
-  };
-
   const getCompanies = async () => {
     try {
       const response = await httpInstance.get("/companies");
@@ -136,8 +137,8 @@ export const useService = () => {
     getLosers,
     loadPerformance,
     getUserRecent,
-    getRecentShares,
     getCompanies,
     getHistory,
+    getUserRecentNAmount,
   };
 };

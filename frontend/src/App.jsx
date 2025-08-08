@@ -16,10 +16,10 @@ function App() {
       <Header />
       <Body>
         <Col md={3}>
-          <Row>
+          <Row id="left-container">
             <Metric title="Gainers" />
           </Row>
-          <Row>
+          <Row id="left-container">
             <Metric title="Losers" />
           </Row>
         </Col>
