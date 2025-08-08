@@ -5,11 +5,13 @@ import Row from "react-bootstrap/esm/Row.js";
 import { useService } from "../api/Service";
 import { useEffect, useState } from "react";
 import Button from "./Button";
+import { useGlobalContext } from "../context/GlobalContext.jsx";
 
 const Metric = ({ title }) => {
   const { getGainers, loadPerformance, getLosers } = useService();
   const [stocks, setStocks] = useState();
   const [lStocks, setlStocks] = useState();
+  const { shouldUpdateMetrics, setShouldUpdateMetrics } = useGlobalContext();
 
   useEffect(() => {
     async function getStocksData() {
@@ -21,10 +23,11 @@ const Metric = ({ title }) => {
         console.log(error);
       }
     }
-    if (!stocks) {
+    if ((!stocks && title == "Gainers") || shouldUpdateMetrics) {
       getStocksData();
+      setShouldUpdateMetrics(false);
     }
-  }, [getGainers, loadPerformance, stocks]);
+  }, [getGainers, loadPerformance, setShouldUpdateMetrics, shouldUpdateMetrics, stocks, title]);
 
   useEffect(() => {
     async function getLoserData() {
@@ -36,10 +39,11 @@ const Metric = ({ title }) => {
         console.log(error.response.data.errors);
       }
     }
-    if (!lStocks) {
+    if ((!lStocks && title == "Losers") || shouldUpdateMetrics) {
       getLoserData();
+      setShouldUpdateMetrics(false);
     }
-  }, [getLosers, loadPerformance, lStocks]);
+  }, [getLosers, loadPerformance, lStocks, title, shouldUpdateMetrics, setShouldUpdateMetrics]);
 
   if (title == "Gainers") {
     return (

@@ -32,7 +32,7 @@ const Header = () => {
         <Col>
           {user && (
             <div>
-              Available Balance: <b>${user.cash}</b>
+              Available Balance: <b>${Math.round(user.cash * 100) / 100}</b>
             </div>
           )}
         </Col>

@@ -10,13 +10,25 @@ export const GlobalContext = createContext({
   setShouldUpdateUser: () => {
     throw new Error("Context is not initialised");
   },
+  shouldUpdateMetrics: false,
+  setShouldUpdateMetrics: () => {
+    throw new Error("Context is not initialised");
+  },
 });
 
 export const GlobalContextProvider = ({ children }) => {
   const [shouldUpdateInvestments, setShouldUpdateInvestments] = useState(false);
-  const [shouldUpdateUser, setShouldUpdateUser] = useState();
+  const [shouldUpdateUser, setShouldUpdateUser] = useState(false);
+  const [shouldUpdateMetrics, setShouldUpdateMetrics] = useState(false);
 
-  const contextValue = { shouldUpdateInvestments, setShouldUpdateInvestments, shouldUpdateUser, setShouldUpdateUser };
+  const contextValue = {
+    shouldUpdateInvestments,
+    setShouldUpdateInvestments,
+    shouldUpdateUser,
+    setShouldUpdateUser,
+    shouldUpdateMetrics,
+    setShouldUpdateMetrics,
+  };
 
   return <GlobalContext.Provider value={contextValue}> {children}</GlobalContext.Provider>;
 };
