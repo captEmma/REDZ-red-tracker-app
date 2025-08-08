@@ -7,8 +7,7 @@ const MetricItem = ({ stockId, name, percentage }) => {
       <Col className="metric-style">
         <b>{stockId}</b> | {name}
         {"   "}
-        {percentage > 0 ? "+" : "-"}{" "}
-        {percentage < 0 ? percentage * -1 : percentage} %
+        {percentage > 0 ? "+" : "-"} {percentage < 0 ? percentage * -1 : percentage} %
       </Col>
     </Row>
   );
