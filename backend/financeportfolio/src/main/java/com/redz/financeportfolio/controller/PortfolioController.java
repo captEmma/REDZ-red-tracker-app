@@ -48,6 +48,16 @@ public class PortfolioController {
         }
     }
 
+    @GetMapping("/user/history")
+    public ResponseEntity<?> getNethworthHistory(){
+        try {
+            Map<Long, Double> history = portfolioService.getNethworthHistory();
+            return ResponseEntity.ok(history);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/user/networth")
     public ResponseEntity<?> getNetworth(){
         try {

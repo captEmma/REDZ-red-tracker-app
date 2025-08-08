@@ -51,6 +51,10 @@ public class PortfolioService {
         return performanceSorted;
     }
 
+    public Map<Long, Double> getNethworthHistory(){
+        return null;
+    }
+
     public List<PortfolioItem> getTopNGainers(int n) throws Exception {
         if(n > repository.count())
             throw new InsufficientSharesException();
@@ -122,7 +126,7 @@ public class PortfolioService {
             savedItem = new PortfolioItem(symbol, shares, cost);
         }
         repository.save(savedItem);
-        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice, currentUser.getCash()));
         return savedItem;
     }
 
@@ -149,7 +153,7 @@ public class PortfolioService {
 
                 existingStock.sellStock(shares, sellFor);
                 PortfolioItem portfolioItem = repository.save(existingStock);
-                transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
+                transactionRepository.save(new Transaction(symbol, -shares, sellPrice, currentUser.getCash()));
                 return portfolioItem;
             }
             else {
