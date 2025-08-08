@@ -17,7 +17,7 @@ const Metric = ({ title }) => {
         const stocks = await getGainers();
         setStocks(stocks);
       } catch (error) {
-        console.log(error.response.data.errors);
+        console.log(error);
       }
     }
     if (!stocks) {
@@ -33,12 +33,7 @@ const Metric = ({ title }) => {
             <div className="metric-title">{title}</div>
             <Row>
               {stocks.map((data) => (
-                <MetricItem
-                  key={data.symbol}
-                  symbol={data.symbol}
-                  name={data.companyName}
-                  price={data.purchasePrice}
-                />
+                <MetricItem key={data.symbol} symbol={data.symbol} name={data.companyName} price={data.purchasePrice} />
               ))}
             </Row>
             <Row>

@@ -17,16 +17,15 @@ const Header = () => {
         const user = await getUser();
         setUsers(user);
       } catch (error) {
-        console.log(error.response.data.errors);
+        console.log(error);
       }
     }
     if (!user || shouldUpdateUser) {
       getUserData();
       setShouldUpdateUser(false);
     }
-  }, [getUser, user]);
+  }, [getUser, setShouldUpdateUser, shouldUpdateUser, user]);
 
-  console.log(user);
   return (
     <Container fluid style={{ width: "100%", padding: "0px" }}>
       <Row className="mx-0" id="top">

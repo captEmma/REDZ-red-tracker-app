@@ -115,6 +115,15 @@ export const useService = () => {
     }
   };
 
+  const getHistory = async () => {
+    try {
+      const response = await httpInstance.get("/user/history");
+      return response.data;
+    } catch (e) {
+      console.error("error getting data - " + e);
+    }
+  };
+
   return {
     getShare,
     sellShares,
@@ -129,5 +138,6 @@ export const useService = () => {
     getUserRecent,
     getRecentShares,
     getCompanies,
+    getHistory,
   };
 };

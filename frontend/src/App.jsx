@@ -8,7 +8,7 @@ import Body from "./components/Body";
 import Investment from "./components/RecentInvestment/Investment";
 import Metric from "./components/Metric";
 import ManageStocks from "./components/Stocks/ManageStocks";
-import Skeleton from "./components/Skeleton";
+import GraphContainer from "./components/Graph/GraphContainer";
 
 function App() {
   return (
@@ -23,7 +23,9 @@ function App() {
             <Metric title="Losers" />
           </Row>
         </Col>
-        <Col></Col>
+        <Col md={6}>
+          <GraphContainer />
+        </Col>
         <Col md={3}>
           <Row id="right-container">
             <Investment />

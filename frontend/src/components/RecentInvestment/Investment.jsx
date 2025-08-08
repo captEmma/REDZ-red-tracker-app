@@ -17,7 +17,7 @@ const Investment = () => {
         const shares = await getRecentShares();
         setShares(shares);
       } catch (error) {
-        console.log(error.response.data.errors);
+        console.log(error);
       }
     }
     if (!shares || shouldUpdateInvestments) {
