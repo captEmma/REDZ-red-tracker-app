@@ -2,11 +2,8 @@ package com.redz.financeportfolio.controller;
 
 import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.YahooApiException;
-import com.redz.financeportfolio.model.PortfolioItem;
-import com.redz.financeportfolio.model.Transaction;
-import com.redz.financeportfolio.model.User;
+import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.service.PortfolioService;
-import com.redz.financeportfolio.model.StockData;
 import com.redz.financeportfolio.service.YahooFinanceService;
 import com.redz.financeportfolio.util.Companies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +76,7 @@ public class PortfolioController {
     }
 
     @GetMapping("/loadperformance")
-    public List<PortfolioItem> getSortedItems(){
+    public List<ItemPerformanceDTO> getSortedItems(){
         return portfolioService.getItemsSortedByPerformance();
     }
 

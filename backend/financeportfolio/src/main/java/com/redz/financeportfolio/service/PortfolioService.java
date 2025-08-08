@@ -5,7 +5,6 @@ import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
-import com.redz.financeportfolio.util.Companies;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,7 +17,7 @@ public class PortfolioService {
     private final TransactionRepository transactionRepository;
     private static final YahooFinanceService yahooFinanceService = new YahooFinanceService();
     private User currentUser;
-    private List<PortfolioItem> performanceSorted = new ArrayList<>();
+    private List<ItemPerformanceDTO> performanceSorted = new ArrayList<>();
     //TODO: add fields to represent performance
 
     public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
@@ -27,27 +26,31 @@ public class PortfolioService {
         currentUser = userRepository.findAll().getFirst();
         this.transactionRepository = transactionRepository;
     }
-
-    public List<PortfolioItem> getItemsSortedByPerformance(){
+    //TODO display changes (%?)
+    public List<ItemPerformanceDTO> getItemsSortedByPerformance(){
         List<PortfolioItem> items = repository.findAll();
-        Map<PortfolioItem, Double> priceMap = new HashMap<>();
+        Map<PortfolioItem, Double> currentPriceMap = new HashMap<>();
 
         for(PortfolioItem item : items){
             try {
                 double currentPrice = yahooFinanceService.getCurrentPrice(item.getSymbol());
-                priceMap.put(item, currentPrice);
+                currentPriceMap.put(item, currentPrice);
             } catch (YahooApiException e) {
                 throw new RuntimeException(e);
             }
         }
-        performanceSorted = items.stream()
-                .sorted((first, second) -> {
-                    double firstValue = first.getShares()*priceMap.get(first);
-                    double secondValue = second.getShares()*priceMap.get(second);
 
-                    return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
+        performanceSorted = items.stream()
+                .map(item ->{
+                    double currentValue = item.getShares()*currentPriceMap.get(item);
+                    double performance = (currentValue / item.getPurchasePrice()) - 1;
+
+                    return new ItemPerformanceDTO(item, performance);
                 })
-                .toList();
+                 .sorted((first, second) ->
+                         Double.compare(second.performance(), first.performance()))
+                 .toList();
+
         return performanceSorted;
     }
 
@@ -55,7 +58,7 @@ public class PortfolioService {
         return null;
     }
 
-    public List<PortfolioItem> getTopNGainers(int n) throws Exception {
+    public List<ItemPerformanceDTO> getTopNGainers(int n) throws Exception {
         if(n > repository.count())
             throw new InsufficientSharesException();
         if(performanceSorted.isEmpty())
@@ -63,7 +66,7 @@ public class PortfolioService {
         return performanceSorted.subList(0, n);
     }
 
-    public List<PortfolioItem> getTopNLosers(int n) throws Exception {
+    public List<ItemPerformanceDTO> getTopNLosers(int n) throws Exception {
         if(n > repository.count())
             throw new InsufficientSharesException();
         if(performanceSorted.isEmpty())
