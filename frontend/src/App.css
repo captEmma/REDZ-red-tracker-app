@@ -110,16 +110,10 @@
 
 .investment {
   width: 400px;
-  border: 1px #a04747 solid;
-  width: 400px;
   padding: 20px 0px;
 }
 
 .investment-title {
-  background-color: #883030;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #ffffff;
   font-weight: bold;
   color: #ffffff;
   font-size: 20px;
@@ -128,8 +122,6 @@
 }
 
 .investment-item {
-  padding: 5px 0px;
-  border: 1px #a04747 solid;
   padding: 5px 0px;
   color: #ffffff;
   &:hover {
