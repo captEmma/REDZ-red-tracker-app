@@ -25,6 +25,11 @@
     purchase_date TIMESTAMP NOT NULL,
     foreign key (symbol) references portfolio_item(symbol)
 );`
+- `CREATE TABLE IF NOT EXISTS historical(
+id integer primary key auto_increment,
+portfolio_date TIMESTAMP NOT NULL,
+worth double not null
+);`
 - `insert into users (username, cash) values ("tester", 500000);`
 
 ### Queries to have on hand
