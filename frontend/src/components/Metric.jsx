@@ -25,23 +25,27 @@ const Metric = () => {
   }, [getGainers, stocks]);
 
   return (
-    <div>
-      <Container>
-        <Row>
-          {stocks.map((data) => (
-            <MetricItem
-              key={data.symbol}
-              stockId={data.symbol}
-              name={data.companyName}
-              price={data.purchasePrice}
-            />
-          ))}
-        </Row>
-        <Row>
-          <button className="show-all">Show All</button>
-        </Row>
-      </Container>
-    </div>
+    <>
+      {stocks && (
+        <div>
+          <Container>
+            <Row>
+              {stocks.map((data) => (
+                <MetricItem
+                  key={data.symbol}
+                  stockId={data.symbol}
+                  name={data.companyName}
+                  price={data.purchasePrice}
+                />
+              ))}
+            </Row>
+            <Row>
+              <button className="show-all">Show All</button>
+            </Row>
+          </Container>
+        </div>
+      )}{" "}
+    </>
   );
 };
 
