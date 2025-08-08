@@ -4,10 +4,12 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import { useService } from "../api/Service";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../context/GlobalContext";
 
 const Header = () => {
   const { getUser } = useService();
   const [user, setUsers] = useState();
+  const { shouldUpdateUser, setShouldUpdateUser } = useGlobalContext();
 
   useEffect(() => {
     async function getUserData() {
@@ -18,8 +20,9 @@ const Header = () => {
         console.log(error.response.data.errors);
       }
     }
-    if (!user) {
+    if (!user || shouldUpdateUser) {
       getUserData();
+      setShouldUpdateUser(false);
     }
   }, [getUser, user]);
 

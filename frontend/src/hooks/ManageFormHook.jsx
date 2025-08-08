@@ -2,9 +2,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useService } from "../api/Service";
+import { useGlobalContext } from "../context/GlobalContext";
 
 export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
   const { sellShares, buyShares } = useService();
+  const { setShouldUpdateInvestments, setShouldUpdateUser } = useGlobalContext();
 
   const buySchema = yup.object().shape({
     symbol: yup.string().trim().required("Field required"),
@@ -44,6 +46,8 @@ export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
     try {
       console.log("Buying:", data);
       await buyShares(data.symbol, data.cost);
+      setShouldUpdateInvestments(true);
+      setShouldUpdateUser(true);
       onBuySuccess();
     } catch (error) {
       console.log(error);
@@ -54,6 +58,8 @@ export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
     try {
       console.log("Selling:", data);
       await sellShares(data.symbol, data.numberOfShares);
+      setShouldUpdateInvestments(true);
+      setShouldUpdateUser(true);
       onSellSuccess();
     } catch (error) {
       console.log(error);
