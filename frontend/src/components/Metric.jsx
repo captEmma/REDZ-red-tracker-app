@@ -26,19 +26,28 @@ const Metric = ({ title }) => {
   }, [getGainers, loadPerformance, stocks]);
 
   return (
-    <div className="px-0">
-      <Container className="component-bg metric">
-        <div className="metric-title">{title}</div>
-        <Row>
-          {stocks.map((data) => (
-            <MetricItem key={data.stockId} stockId={data.stockId} name={data.name} percentage={data.percentage} />
-          ))}
-        </Row>
-        <Row>
-          <Button />
-        </Row>
-      </Container>
-    </div>
+    <>
+      {stocks && (
+        <div className="px-0">
+          <Container className="component-bg metric">
+            <div className="metric-title">{title}</div>
+            <Row>
+              {stocks.map((data) => (
+                <MetricItem
+                  key={data.symbol}
+                  symbol={data.symbol}
+                  name={data.companyName}
+                  price={data.purchasePrice}
+                />
+              ))}
+            </Row>
+            <Row>
+              <Button title="show all" />
+            </Row>
+          </Container>
+        </div>
+      )}
+    </>
   );
 };
 
