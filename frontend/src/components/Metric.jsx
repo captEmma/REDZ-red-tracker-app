@@ -23,19 +23,28 @@ const Metric = ({ title }) => {
     },
   ];
   return (
-    <div className="px-0">
-      <Container className="component-bg metric">
-        <div className="metric-title">{title}</div>
-        <Row>
-          {mockData.map((data) => (
-            <MetricItem key={data.stockId} stockId={data.stockId} name={data.name} percentage={data.percentage} />
-          ))}
-        </Row>
-        <Row>
-          <Button title="Show all" />
-        </Row>
-      </Container>
-    </div>
+    <>
+      {stocks && (
+        <div className="px-0">
+          <Container className="component-bg metric">
+            <div className="metric-title">{title}</div>
+            <Row>
+              {mockData.map((data) => (
+                <MetricItem
+                  key={data.stockId}
+                  stockId={data.stockId}
+                  name={data.name}
+                  percentage={data.percentage}
+                />
+              ))}
+            </Row>
+            <Row>
+              <Button title="Show all" />
+            </Row>
+          </Container>
+        </div>
+      )}
+    </>
   );
 };
 
