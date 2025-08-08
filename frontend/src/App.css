@@ -2,10 +2,58 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.align-top-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: start;
+}
+
 .center-content {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100 !important;
+  width: 550px !important;
+  border: 2px #622323 solid;
+  padding: 22px;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.modal-title {
+  margin-bottom: 30px !important;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0000006d !important;
+  z-index: 90 !important;
+}
+
+.close-button {
+  background-color: transparent;
+  border: 0px;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  transition-duration: 0.2s;
+  &:hover {
+    background-color: #e2e2e2;
+  }
 }
 
 .stock-button {
@@ -14,7 +62,7 @@
   background-color: #a13030;
   border: 0px transparent;
   border-radius: 10px;
-  margin: 10px 0px 20px 0px;
+  margin: 10px 0px;
   padding: 10px 20px 10px 10px;
   color: #ffffff;
   transition-duration: 0.2s;
@@ -50,7 +98,7 @@
 }
 
 .manage-stocks {
-  padding: 15px 40px;
+  padding: 25px 40px;
 }
 
 .or {
@@ -60,18 +108,13 @@
   font-size: 18px;
 }
 
+.metric,
 .investment {
-  width: 400px;
-  border: 1px #a04764 solid;
-  width: 400px;
   padding: 20px 0px;
 }
 
+.metric-title,
 .investment-title {
-  background-color: #88304e;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #ffffff;
   font-weight: bold;
   color: #ffffff;
   font-size: 20px;
@@ -80,8 +123,6 @@
 }
 
 .investment-item {
-  padding: 5px 0px;
-  border: 1px #a04764 solid;
   padding: 5px 0px;
   color: #ffffff;
   &:hover {
@@ -110,4 +151,60 @@
   font-size: 25px;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.flex-downward {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.currency {
+  position: relative;
+
+  &:after {
+    position: absolute;
+    left: 20px;
+    top: 11px;
+    content: "$";
+  }
+}
+
+label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  background-color: #ffffff;
+  padding: 0 5px;
+  z-index: 1;
+  font-size: 13px;
+  color: darkgray;
+}
+
+select,
+input {
+  width: 100%;
+
+  border: 1px solid grey;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 10px 20px;
+  outline: none;
+
+  &:focus {
+    border-color: grey;
+  }
+}
+
+select {
+  padding-left: 15px;
+}
+
+.currency input {
+  padding-left: 30px;
+}
+
+.submit {
+  font-size: 30px;
 }

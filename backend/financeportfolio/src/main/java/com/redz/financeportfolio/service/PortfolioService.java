@@ -1,25 +1,24 @@
 package com.redz.financeportfolio.service;
 
 import com.redz.financeportfolio.exception.*;
-import com.redz.financeportfolio.model.PortfolioItem;
-import com.redz.financeportfolio.model.StockData;
-import com.redz.financeportfolio.model.Transaction;
-import com.redz.financeportfolio.model.User;
+import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
+import com.redz.financeportfolio.util.Companies;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PortfolioService {
     private final PortfolioRepository repository;
     private final UserRepository userRepository;
     private final TransactionRepository transactionRepository;
-
+    private static final YahooFinanceService yahooFinanceService = new YahooFinanceService();
     private User currentUser;
+    private List<PortfolioItem> performanceSorted = new ArrayList<>();
     //TODO: add fields to represent performance
 
     public PortfolioService(PortfolioRepository repository, UserRepository userRepository, TransactionRepository transactionRepository){
@@ -29,9 +28,56 @@ public class PortfolioService {
         this.transactionRepository = transactionRepository;
     }
 
+    public List<PortfolioItem> getItemsSortedByPerformance(){
+        List<PortfolioItem> items = repository.findAll();
+        Map<PortfolioItem, Double> priceMap = new HashMap<>();
+
+        for(PortfolioItem item : items){
+            try {
+                double currentPrice = yahooFinanceService.getCurrentPrice(item.getSymbol());
+                priceMap.put(item, currentPrice);
+            } catch (YahooApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        performanceSorted = items.stream()
+                .sorted((first, second) -> {
+                    double firstValue = first.getShares()*priceMap.get(first);
+                    double secondValue = second.getShares()*priceMap.get(second);
+
+                    return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
+                })
+                .toList();
+        return performanceSorted;
+    }
+
+    public List<PortfolioItem> getTopNGainers(int n) throws Exception {
+        if(n > repository.count())
+            throw new InsufficientSharesException();
+        if(performanceSorted.isEmpty())
+            throw new Exception("Load performance first!");
+        return performanceSorted.subList(0, n);
+    }
+
+    public List<PortfolioItem> getTopNLosers(int n) throws Exception {
+        if(n > repository.count())
+            throw new InsufficientSharesException();
+        if(performanceSorted.isEmpty())
+            throw new Exception("Load performance first!");
+        return performanceSorted.reversed().subList(0, n);
+    }
+
+    public List<Transaction> getRecentInvestments() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        Collections.reverse(transactions);
+        return transactions.stream()
+                .limit(10)
+                .collect(Collectors.toList());
+    }
+
     public double getNetworth() throws YahooApiException, EmptyPortfolioException {
         List<PortfolioItem> items = getAllItems();
-        if (items.size() == 0) {
+        if (items.isEmpty()) {
             throw new EmptyPortfolioException();
         }
         double portfolioValue = 0;
@@ -39,7 +85,7 @@ public class PortfolioService {
             String symbol = item.getSymbol();
             double shares = item.getShares();
             double currentPrice;
-            currentPrice = new YahooFinanceService().getCurrentPrice(symbol);
+            currentPrice = yahooFinanceService.getCurrentPrice(symbol);
 
             portfolioValue+=shares*currentPrice;
         }
@@ -55,7 +101,7 @@ public class PortfolioService {
 
         double purchasePrice;
         try {
-            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            StockData stockData =  yahooFinanceService.getStockData(symbol, "1d", "1d");
             purchasePrice = stockData.getCurrentPrice();
 
         } catch (Exception e){
@@ -83,7 +129,7 @@ public class PortfolioService {
     public PortfolioItem sellShares(String symbol, double shares) throws StockSymbolNotFoundException, InsufficientSharesException {
         double sellPrice;
         try {
-            StockData stockData = new YahooFinanceService().getStockData(symbol, "1d", "1d");
+            StockData stockData = yahooFinanceService.getStockData(symbol, "1d", "1d");
             sellPrice = stockData.getCurrentPrice();
         } catch (Exception e){
             throw new StockSymbolNotFoundException();
@@ -124,5 +170,14 @@ public class PortfolioService {
 
     public User getUser(){
         return userRepository.findAll().getFirst();
+    }
+
+    @Deprecated
+    public double getDifference(String symbol) throws YahooApiException, StockSymbolNotFoundException {
+        double currentPrice = yahooFinanceService.getCurrentPrice(symbol);
+        Optional<PortfolioItem> itemOptional = repository.findById(symbol);
+        if(itemOptional.isEmpty())
+            throw new StockSymbolNotFoundException();
+        return currentPrice - itemOptional.get().getPurchasePrice();
     }
 }

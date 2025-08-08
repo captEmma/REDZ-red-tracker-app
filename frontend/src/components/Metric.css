@@ -16,9 +16,7 @@
 
 .metric-style {
   color: #ffffff;
-  font-size: 10px;
+  font-size: 15px;
   border-radius: 10px;
-}
-.metric-style:hover {
-  border: 5px solid #969393;
+  text-align: center;
 }

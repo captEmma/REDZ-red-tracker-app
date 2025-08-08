@@ -1,5 +1,6 @@
 package com.redz.financeportfolio.model;
 
+import com.redz.financeportfolio.util.Companies;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +9,7 @@ public class PortfolioItem {
     @Id
     @Column(length = 10)
     private String symbol;
+    private String companyName;
     private double shares;
     private double purchasePrice;
 
@@ -15,8 +17,10 @@ public class PortfolioItem {
 
     public PortfolioItem(String symbol, double shares, double purchasePrice) {
         this.symbol = symbol;
+        this.companyName = Companies.getCompanyName(symbol);
         this.shares = shares;
         this.purchasePrice = purchasePrice;
+        //TODO look up the company name from the list (column CAN be null, so no error if we can't find it)
     }
 
     public void buyStock(double sharesToBuy, double cost){
@@ -37,11 +41,15 @@ public class PortfolioItem {
         return shares;
     }
 
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
-
     public String getSymbol() {
         return symbol;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 }
