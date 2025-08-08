@@ -16,6 +16,7 @@ public class Transaction {
     private String symbol;
     private String companyName;
     private double shares;
+    private double cash;
     private double purchasePrice;
 
     @CreationTimestamp
@@ -23,10 +24,11 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(String symbol, double shares, double purchasePrice) {
+    public Transaction(String symbol, double shares, double purchasePrice, double cash) {
         this.symbol = symbol;
         this.companyName = Companies.getCompanyName(symbol);
         this.purchasePrice = purchasePrice;
+        this.cash = cash;
         this.shares = shares;
     }
 

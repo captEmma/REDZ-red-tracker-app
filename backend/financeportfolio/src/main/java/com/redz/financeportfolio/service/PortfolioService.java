@@ -8,10 +8,7 @@ import com.redz.financeportfolio.repository.UserRepository;
 import com.redz.financeportfolio.util.Companies;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +45,10 @@ public class PortfolioService {
                 })
                 .toList();
         return performanceSorted;
+    }
+
+    public Map<Long, Double> getNethworthHistory(){
+        return null;
     }
 
     public List<PortfolioItem> getTopNGainers(int n) throws Exception {
@@ -121,7 +122,7 @@ public class PortfolioService {
             savedItem = new PortfolioItem(symbol, shares, cost);
         }
         repository.save(savedItem);
-        transactionRepository.save(new Transaction(symbol, shares, purchasePrice));
+        transactionRepository.save(new Transaction(symbol, shares, purchasePrice, currentUser.getCash()));
         return savedItem;
     }
 
@@ -148,7 +149,7 @@ public class PortfolioService {
 
                 existingStock.sellStock(shares, sellFor);
                 PortfolioItem portfolioItem = repository.save(existingStock);
-                transactionRepository.save(new Transaction(symbol, -shares, sellPrice));
+                transactionRepository.save(new Transaction(symbol, -shares, sellPrice, currentUser.getCash()));
                 return portfolioItem;
             }
             else {
