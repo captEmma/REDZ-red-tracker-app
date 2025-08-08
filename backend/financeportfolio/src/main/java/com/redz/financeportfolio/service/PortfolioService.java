@@ -78,11 +78,11 @@ public class PortfolioService {
         return performanceSorted.reversed().subList(0, n);
     }
 
-    public List<Transaction> getRecentInvestments() {
+    public List<Transaction> getRecentInvestments(int n) {
         List<Transaction> transactions = transactionRepository.findAll();
         Collections.reverse(transactions);
         return transactions.stream()
-                .limit(10)
+                .limit(n)
                 .collect(Collectors.toList());
     }
 
