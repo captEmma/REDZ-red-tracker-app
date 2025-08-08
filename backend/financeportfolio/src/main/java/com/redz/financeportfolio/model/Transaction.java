@@ -48,6 +48,10 @@ public class Transaction {
         return shares;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
     public LocalDateTime getPurchaseDate() {
         return purchaseDate;
     }
