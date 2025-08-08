@@ -14,9 +14,18 @@
     username VARCHAR(20) NOT NULL,
     cash INTEGER NOT NULL
 );`
+- `CREATE TABLE IF NOT EXISTS transactions(
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    symbol VARCHAR(10) NOT NULL,
+    purchase_date TIMESTAMP NOT NULL,
+    purchase_price DOUBLE NOT NULL,
+    shares DOUBLE NOT NULL,
+    foreign key (symbol) references portfolio_item(symbol)
+);`
 - `insert into users (username, cash) values ("tester", 500000);`
 
 ### Queries to have on hand
 - check all stocks: `select * from portfolio_item;`
 - check users: `select * from users;`
+- check transactions: `select * from transactions;`
 - clear all stocks: `delete from portfolio_item;`

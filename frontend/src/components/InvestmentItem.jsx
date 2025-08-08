@@ -6,7 +6,8 @@ const InvestmentItem = ({ name, sharesCount }) => {
     <Row className="investment-item mx-0">
       <Col className="investment-item-title">{name}</Col>
       <Col className="investment-item-shares-count">
-        {sharesCount > 0 ? "+" : "-"} {sharesCount < 0 ? sharesCount * -1 : sharesCount} shares
+        {sharesCount > 0 ? "+" : "-"}{" "}
+        {sharesCount < 0 ? sharesCount * -1 : sharesCount} shares
       </Col>
     </Row>
   );
