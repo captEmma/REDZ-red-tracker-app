@@ -57,7 +57,7 @@ Backend, frontend, working in pairs
 - 
 
 ### What would you have done differently if you got to start over again?
-- Start planning sooner
+- Start frontend implementation sooner
 - Changing the database all the time
 
 ## SQL queries
