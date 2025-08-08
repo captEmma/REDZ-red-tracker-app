@@ -1,5 +1,6 @@
 package com.redz.financeportfolio.controller;
 
+import com.redz.financeportfolio.exception.InsufficientSharesException;
 import com.redz.financeportfolio.exception.YahooApiException;
 import com.redz.financeportfolio.model.PortfolioItem;
 import com.redz.financeportfolio.model.User;
@@ -56,6 +57,11 @@ public class PortfolioController {
         }
     }
 
+    @GetMapping("/allstocks")
+    public List<PortfolioItem> getAllStocks(){
+        return portfolioService.getAllItems();
+    }
+
     @GetMapping("/allcompanies")
     public List<Map<String, String>> getAllCompanies() {
         return Companies.getAll();
@@ -64,6 +70,29 @@ public class PortfolioController {
     @GetMapping("/user")
     public User getUser(){
         return portfolioService.getUser();
+    }
+
+    @GetMapping("/loadperformance")
+    public List<PortfolioItem> getSortedItems(){
+        return portfolioService.getItemsSortedByPerformance();
+    }
+
+    @GetMapping("/gainers")
+    public ResponseEntity<?> getGainers(@RequestParam(defaultValue = "3") int n){
+        try {
+            return ResponseEntity.ok(portfolioService.getTopNGainers(n));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/losers")
+    public ResponseEntity<?> getLosers(@RequestParam(defaultValue = "3") int n){
+        try {
+            return ResponseEntity.ok(portfolioService.getTopNLosers(n));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/user/all")

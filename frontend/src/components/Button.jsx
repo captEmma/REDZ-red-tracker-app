@@ -1,11 +1,11 @@
-const ShowButton = ({ ...rest }) => {
+const Button = ({ title, ...rest }) => {
   return (
     <div className="center-content">
       <button className="show-button" {...rest}>
-        Show All
+        {title}
       </button>
     </div>
   );
 };
 
-export default ShowButton;
+export default Button;
