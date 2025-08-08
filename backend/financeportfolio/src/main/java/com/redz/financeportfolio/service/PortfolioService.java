@@ -30,7 +30,6 @@ public class PortfolioService {
     public List<ItemPerformanceDTO> getItemsSortedByPerformance(){
         List<PortfolioItem> items = repository.findAll();
         Map<PortfolioItem, Double> currentPriceMap = new HashMap<>();
-        Map<PortfolioItem, Double> evaluation = new HashMap<>();
 
         for(PortfolioItem item : items){
             try {
@@ -41,7 +40,7 @@ public class PortfolioService {
             }
         }
 
-        return items.stream()
+        performanceSorted = items.stream()
                 .map(item ->{
                     double currentValue = item.getShares()*currentPriceMap.get(item);
                     double performance = (currentValue / item.getPurchasePrice()) - 1;
@@ -51,6 +50,8 @@ public class PortfolioService {
                  .sorted((first, second) ->
                          Double.compare(second.performance(), first.performance()))
                  .toList();
+
+        return performanceSorted;
     }
 
     public List<ItemPerformanceDTO> getTopNGainers(int n) throws Exception {
