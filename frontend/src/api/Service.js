@@ -70,15 +70,6 @@ export const useService = () => {
     }
   };
 
-  const loadPerformance = async () => {
-    try {
-      const response = await httpInstance.get("/loadperformance");
-      return response.data;
-    } catch (e) {
-      console.error("error getting user - " + e);
-    }
-  };
-
   const buyShares = async (symbol, cost) => {
     try {
       const response = await httpInstance.put(`/buy/${symbol}/${cost}`);
@@ -97,6 +88,33 @@ export const useService = () => {
     }
   };
 
+  const loadPerformance = async () => {
+    try {
+      const response = await httpInstance.get("/loadperformance");
+      return response.data;
+    } catch (e) {
+      console.error("error getting user - " + e);
+    }
+  };
+
+  const getRecentShares = async () => {
+    try {
+      const response = await httpInstance.get("/user/recent");
+      return response.data;
+    } catch (e) {
+      console.error("error getting data - " + e);
+    }
+  };
+
+  const getCompanies = async () => {
+    try {
+      const response = await httpInstance.get("/companies");
+      return response.data;
+    } catch (e) {
+      console.error("error getting data - " + e);
+    }
+  };
+
   return {
     getShare,
     sellShares,
@@ -109,5 +127,7 @@ export const useService = () => {
     getLosers,
     loadPerformance,
     getUserRecent,
+    getRecentShares,
+    getCompanies,
   };
 };
