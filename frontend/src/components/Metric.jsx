@@ -2,8 +2,9 @@ import Container from "react-bootstrap/esm/Container.js";
 import "./Metric.css";
 import MetricItem from "./MetricItem.jsx";
 import Row from "react-bootstrap/esm/Row.js";
+import Button from "./Button";
 
-const Metric = () => {
+const Metric = ({ title }) => {
   const mockData = [
     {
       stockId: "AAPL",
@@ -22,25 +23,16 @@ const Metric = () => {
     },
   ];
   return (
-    <div>
-      <Container>
+    <div className="px-0">
+      <Container className="component-bg metric">
+        <div className="metric-title">{title}</div>
         <Row>
           {mockData.map((data) => (
-            <MetricItem
-              key={data.stockId}
-              stockId={data.stockId}
-              name={data.name}
-              percentage={data.percentage}
-            />
+            <MetricItem key={data.stockId} stockId={data.stockId} name={data.name} percentage={data.percentage} />
           ))}
         </Row>
         <Row>
-          <button
-            className="show-all"
-            //   onclick="location.href='default.html';"
-          >
-            Show All
-          </button>
+          <Button title="Show all" />
         </Row>
       </Container>
     </div>

@@ -20,8 +20,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 100 !important;
-  width: 550px;
-  border: 2px red solid;
+  width: 550px !important;
+  border: 2px #622323 solid;
   padding: 22px;
   border-radius: 10px;
   background-color: #ffffff;
@@ -52,7 +52,7 @@
   height: 40px;
   transition-duration: 0.2s;
   &:hover {
-    background-color: grey;
+    background-color: #e2e2e2;
   }
 }
 
@@ -62,7 +62,7 @@
   background-color: #a13030;
   border: 0px transparent;
   border-radius: 10px;
-  margin: 10px 0px 20px 0px;
+  margin: 10px 0px;
   padding: 10px 20px 10px 10px;
   color: #ffffff;
   transition-duration: 0.2s;
@@ -98,7 +98,7 @@
 }
 
 .manage-stocks {
-  padding: 15px 40px;
+  padding: 25px 40px;
 }
 
 .or {
@@ -108,18 +108,13 @@
   font-size: 18px;
 }
 
+.metric,
 .investment {
-  width: 400px;
-  border: 1px #a04747 solid;
-  width: 400px;
   padding: 20px 0px;
 }
 
+.metric-title,
 .investment-title {
-  background-color: #883030;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #ffffff;
   font-weight: bold;
   color: #ffffff;
   font-size: 20px;
@@ -128,8 +123,6 @@
 }
 
 .investment-item {
-  padding: 5px 0px;
-  border: 1px #a04747 solid;
   padding: 5px 0px;
   color: #ffffff;
   &:hover {

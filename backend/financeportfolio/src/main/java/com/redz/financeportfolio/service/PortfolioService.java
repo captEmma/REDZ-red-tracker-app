@@ -29,19 +29,23 @@ public class PortfolioService {
     }
 
     public List<PortfolioItem> getItemsSortedByPerformance(){
-        performanceSorted = repository.findAll().stream()
+        List<PortfolioItem> items = repository.findAll();
+        Map<PortfolioItem, Double> priceMap = new HashMap<>();
+
+        for(PortfolioItem item : items){
+            try {
+                double currentPrice = yahooFinanceService.getCurrentPrice(item.getSymbol());
+                priceMap.put(item, currentPrice);
+            } catch (YahooApiException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        performanceSorted = items.stream()
                 .sorted((first, second) -> {
-                    try {
-                        double secondPrice = yahooFinanceService.getCurrentPrice(second.getSymbol());
-                        double firstPrice = yahooFinanceService.getCurrentPrice(first.getSymbol());
+                    double firstValue = first.getShares()*priceMap.get(first);
+                    double secondValue = second.getShares()*priceMap.get(second);
 
-                        double secondValue = second.getShares() * secondPrice;
-                        double firstValue = first.getShares() * firstPrice;
-
-                        return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
-                    } catch (YahooApiException e) {
-                        throw new RuntimeException(e);
-                    }
+                    return Double.compare(secondValue/second.getPurchasePrice(), firstValue/first.getPurchasePrice());
                 })
                 .toList();
         return performanceSorted;
