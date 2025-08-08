@@ -17,6 +17,18 @@ const Investment = () => {
       name: "company3",
       sharesCount: 2,
     },
+    {
+      name: "company1",
+      sharesCount: -10,
+    },
+    {
+      name: "company2",
+      sharesCount: 23,
+    },
+    {
+      name: "company3",
+      sharesCount: 2,
+    },
   ];
 
   return (

@@ -4,15 +4,16 @@ import MetricItem from "./MetricItem.jsx";
 import Row from "react-bootstrap/esm/Row.js";
 import { useService } from "../api/Service";
 import { useEffect, useState } from "react";
+import Button from "./Button";
 
-const Metric = () => {
+const Metric = ({ title }) => {
   const { getGainers, loadPerformance } = useService();
   const [stocks, setStocks] = useState();
 
   useEffect(() => {
     async function getStocksData() {
       try {
-        const lp = await loadPerformance();
+        await loadPerformance();
         const stocks = await getGainers();
         setStocks(stocks);
       } catch (error) {
@@ -22,30 +23,22 @@ const Metric = () => {
     if (!stocks) {
       getStocksData();
     }
-  }, [getGainers, stocks]);
+  }, [getGainers, loadPerformance, stocks]);
 
   return (
-    <>
-      {stocks && (
-        <div>
-          <Container>
-            <Row>
-              {stocks.map((data) => (
-                <MetricItem
-                  key={data.symbol}
-                  stockId={data.symbol}
-                  name={data.companyName}
-                  price={data.purchasePrice}
-                />
-              ))}
-            </Row>
-            <Row>
-              <button className="show-all">Show All</button>
-            </Row>
-          </Container>
-        </div>
-      )}{" "}
-    </>
+    <div className="px-0">
+      <Container className="component-bg metric">
+        <div className="metric-title">{title}</div>
+        <Row>
+          {stocks.map((data) => (
+            <MetricItem key={data.stockId} stockId={data.stockId} name={data.name} percentage={data.percentage} />
+          ))}
+        </Row>
+        <Row>
+          <Button />
+        </Row>
+      </Container>
+    </div>
   );
 };
 

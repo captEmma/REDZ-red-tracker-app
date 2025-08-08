@@ -38,7 +38,7 @@ const ManageStocks = () => {
 
   return (
     <>
-      <div className="manage-stocks-bg">
+      <div className="component-bg manage-stocks">
         <div>
           <StockButton icon={faPlus} title="Buy shares" onClick={() => setIsBuyingOpen(true)} />
         </div>
