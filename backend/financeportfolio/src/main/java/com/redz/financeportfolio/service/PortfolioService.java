@@ -5,11 +5,14 @@ import com.redz.financeportfolio.model.*;
 import com.redz.financeportfolio.repository.PortfolioRepository;
 import com.redz.financeportfolio.repository.TransactionRepository;
 import com.redz.financeportfolio.repository.UserRepository;
+import com.redz.financeportfolio.util.Companies;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PortfolioService {
@@ -61,6 +64,14 @@ public class PortfolioService {
         if(performanceSorted.isEmpty())
             throw new Exception("Load performance first!");
         return performanceSorted.reversed().subList(0, n);
+    }
+
+    public List<Transaction> getRecentInvestments() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        Collections.reverse(transactions);
+        return transactions.stream()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     public double getNetworth() throws YahooApiException, EmptyPortfolioException {
