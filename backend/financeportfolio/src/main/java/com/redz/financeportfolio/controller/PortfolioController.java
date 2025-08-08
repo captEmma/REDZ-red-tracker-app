@@ -72,12 +72,12 @@ public class PortfolioController {
         return portfolioService.getUser();
     }
 
-    @GetMapping("/refresh")
+    @GetMapping("/loadperformance")
     public List<PortfolioItem> getSortedItems(){
         return portfolioService.getItemsSortedByPerformance();
     }
 
-    @GetMapping("/loadperformance")
+    @GetMapping("/gainers")
     public ResponseEntity<?> getGainers(@RequestParam(defaultValue = "3") int n){
         try {
             return ResponseEntity.ok(portfolioService.getTopNGainers(n));
