@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class PortfolioController {
@@ -63,6 +64,11 @@ public class PortfolioController {
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/companies")
+    public Map<String, String> getAllCompanies(){
+        return Companies.COMPANYNAMES;
     }
 
     @GetMapping("/allstocks")

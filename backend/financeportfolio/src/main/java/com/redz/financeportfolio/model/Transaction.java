@@ -26,7 +26,7 @@ public class Transaction {
 
     public Transaction(String symbol, double shares, double purchasePrice, double cash) {
         this.symbol = symbol;
-        this.companyName = Companies.getCompanyName(symbol);
+        this.companyName = Companies.COMPANYNAMES.get(symbol);
         this.purchasePrice = purchasePrice;
         this.cash = cash;
         this.shares = shares;

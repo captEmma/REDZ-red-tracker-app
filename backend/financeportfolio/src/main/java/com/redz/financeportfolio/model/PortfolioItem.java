@@ -17,7 +17,7 @@ public class PortfolioItem {
 
     public PortfolioItem(String symbol, double shares, double purchasePrice) {
         this.symbol = symbol;
-        this.companyName = Companies.getCompanyName(symbol);
+        this.companyName = Companies.COMPANYNAMES.get(symbol);
         this.shares = shares;
         this.purchasePrice = purchasePrice;
         //TODO look up the company name from the list (column CAN be null, so no error if we can't find it)
