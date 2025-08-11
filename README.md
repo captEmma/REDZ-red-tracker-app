@@ -1,4 +1,5 @@
 # REDZ-red-tracker-app
+**Simple practice application to track and manage a financial portfolio consisting of stocks and cash. The goal is to learn and practice Spring Boot, Flask, React, Javascript and other technologies necessary to built a REST based webservice.**
 
 ## Presentation
 
