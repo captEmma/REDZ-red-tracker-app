@@ -3,12 +3,14 @@ import Row from "react-bootstrap/Row";
 import { useService } from "../../api/Service";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useGlobalContext } from "../../context/GlobalContext";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const LineGraph = () => {
   const { getHistory } = useService();
   const [history, setHistory] = useState();
+  const { shouldUpdateGraph, setShouldUpdateGraph } = useGlobalContext();
 
   useEffect(() => {
     async function getHistoryData() {
@@ -19,10 +21,11 @@ const LineGraph = () => {
         console.log(error);
       }
     }
-    if (!history) {
+    if (!history || shouldUpdateGraph) {
       getHistoryData();
+      setShouldUpdateGraph(false);
     }
-  }, [getHistory, history]);
+  }, [getHistory, history, setShouldUpdateGraph, shouldUpdateGraph]);
 
   const options = {
     responsive: true,
