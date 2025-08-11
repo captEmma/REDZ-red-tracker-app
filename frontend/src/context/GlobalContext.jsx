@@ -14,12 +14,17 @@ export const GlobalContext = createContext({
   setShouldUpdateMetrics: () => {
     throw new Error("Context is not initialised");
   },
+  shouldUpdateGraph: false,
+  setShouldUpdateGraph: () => {
+    throw new Error("Context is not initialised");
+  },
 });
 
 export const GlobalContextProvider = ({ children }) => {
   const [shouldUpdateInvestments, setShouldUpdateInvestments] = useState(false);
   const [shouldUpdateUser, setShouldUpdateUser] = useState(false);
   const [shouldUpdateMetrics, setShouldUpdateMetrics] = useState(false);
+  const [shouldUpdateGraph, setShouldUpdateGraph] = useState(false);
 
   const contextValue = {
     shouldUpdateInvestments,
@@ -28,6 +33,8 @@ export const GlobalContextProvider = ({ children }) => {
     setShouldUpdateUser,
     shouldUpdateMetrics,
     setShouldUpdateMetrics,
+    shouldUpdateGraph,
+    setShouldUpdateGraph,
   };
 
   return <GlobalContext.Provider value={contextValue}> {children}</GlobalContext.Provider>;

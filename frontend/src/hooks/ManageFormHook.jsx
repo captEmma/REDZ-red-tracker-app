@@ -6,7 +6,7 @@ import { useGlobalContext } from "../context/GlobalContext";
 
 export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
   const { sellShares, buyShares } = useService();
-  const { setShouldUpdateInvestments, setShouldUpdateUser, setShouldUpdateMetrics } = useGlobalContext();
+  const { setShouldUpdateInvestments, setShouldUpdateUser, setShouldUpdateMetrics, setShouldUpdateGraph } = useGlobalContext();
 
   const buySchema = yup.object().shape({
     symbol: yup.string().trim().required("Field required"),
@@ -49,6 +49,7 @@ export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
       setShouldUpdateInvestments(true);
       setShouldUpdateUser(true);
       setShouldUpdateMetrics(true);
+      setShouldUpdateGraph(true);
       onBuySuccess();
     } catch (error) {
       console.log(error);
@@ -62,6 +63,7 @@ export const useManageFormHook = ({ onBuySuccess, onSellSuccess }) => {
       setShouldUpdateInvestments(true);
       setShouldUpdateUser(true);
       setShouldUpdateMetrics(true);
+      setShouldUpdateGraph(true);
       onSellSuccess();
     } catch (error) {
       console.log(error);
