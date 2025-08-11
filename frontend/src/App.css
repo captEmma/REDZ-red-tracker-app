@@ -14,6 +14,12 @@
   align-items: center;
 }
 
+.center-horizontally {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
 .modal-wrapper {
   position: fixed;
   top: 50%;
@@ -72,6 +78,24 @@
     background-color: #622323;
     scale: 0.95;
   }
+}
+
+.line {
+  width: 92% !important;
+  border: 2px solid #a13030;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.graph-title {
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 2px solid #a13030;
+  border-radius: 10px;
+  background-color: #a13030;
+  color: #ffffff;
 }
 
 .show-button {

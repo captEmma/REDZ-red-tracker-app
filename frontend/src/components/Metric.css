@@ -16,7 +16,12 @@
 
 .metric-style {
   color: #ffffff;
-  font-size: 15px;
+  font-size: 14px;
   border-radius: 10px;
   text-align: center;
+  line-height: 20px;
+}
+
+hr.one {
+  border: 0px;
 }
